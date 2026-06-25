@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>KrishiSeva — Empowering India's Farmers</title>
+<meta name="description" content="KrishiSeva is India's smartest agri-tech platform — AI crop diagnosis, live mandi rates, direct market access, and a full farm dashboard for every farmer."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Teko:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --earth:#1c2b0e;--moss:#2e4a1a;--sage:#4a7c3f;--fern:#6aab5e;
+  --wheat:#d4920a;--sun:#f0b429;--terra:#8b3a12;--clay:#c0562a;
+  --dust:#f5edd6;--parch:#fdf8ef;--linen:#ece5d0;--bark:#3d2b1f;
+  --stone:#7a6e5f;--sky:#5a8fa8;--rain:#3b6e8f;--white:#ffffff;
+  --r-sm:8px;--r-md:14px;--r-lg:22px;
+  --sh-1:0 2px 12px rgba(28,43,14,.10);--sh-2:0 8px 32px rgba(28,43,14,.16);--sh-3:0 20px 60px rgba(28,43,14,.22);
+  --serif:'Lora',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--display:'Teko',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--sans);background:var(--parch);color:var(--bark);overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.6}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;height:66px;display:flex;align-items:center;padding:0 5vw;background:rgba(28,43,14,.96);backdrop-filter:blur(18px);border-bottom:1px solid rgba(106,171,94,.18)}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-box{width:38px;height:38px;background:linear-gradient(135deg,var(--wheat),var(--sun));border-radius:10px;display:grid;place-items:center;font-size:18px;box-shadow:0 4px 14px rgba(212,146,10,.4)}
+.nav-brand-name{font-family:var(--display);font-size:1.65rem;letter-spacing:1px;color:var(--dust);line-height:1}
+.nav-brand-name span{color:var(--sun)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.nav-link{color:rgba(245,237,214,.7);text-decoration:none;font-size:.88rem;font-weight:500;padding:7px 15px;border-radius:var(--r-sm);transition:all .2s}
+.nav-link:hover{color:var(--sun);background:rgba(255,255,255,.07)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:var(--r-sm);font-family:var(--sans);font-weight:600;font-size:.9rem;cursor:pointer;border:none;text-decoration:none;transition:all .22s;white-space:nowrap}
+.btn-gold{background:linear-gradient(135deg,var(--wheat),var(--sun));color:var(--earth);box-shadow:0 4px 18px rgba(212,146,10,.45)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(212,146,10,.55)}
+.btn-ghost{background:rgba(255,255,255,.08);color:var(--dust);border:1.5px solid rgba(255,255,255,.22)}
+.btn-ghost:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.45)}
+.btn-outline{background:transparent;color:var(--sage);border:2px solid var(--sage)}
+.btn-outline:hover{background:var(--sage);color:var(--white)}
+.btn-lg{padding:16px 36px;font-size:1rem;border-radius:var(--r-md)}
+
+/* HERO */
+.hero{min-height:100vh;padding-top:66px;background:linear-gradient(160deg,var(--earth) 0%,var(--moss) 40%,#3a6030 100%);display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(106,171,94,.12) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(240,180,41,.08) 0%,transparent 50%);pointer-events:none}
+.hero-content{position:relative;z-index:1;max-width:800px;padding:0 5vw}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(240,180,41,.12);border:1px solid rgba(240,180,41,.3);color:var(--sun);padding:6px 18px;border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:32px;animation:slideIn .6s ease both}
+.pulse-dot{width:7px;height:7px;background:var(--sun);border-radius:50%;animation:pulsate 1.8s ease-in-out infinite}
+.hero h1{font-family:var(--display);font-size:clamp(3.5rem,7vw,6.5rem);line-height:.92;letter-spacing:2px;color:var(--dust);margin-bottom:24px;animation:slideIn .7s ease .1s both}
+.hero h1 em{color:var(--sun);font-style:normal;display:block}
+.hero-p{font-size:1.15rem;line-height:1.85;color:rgba(245,237,214,.7);max-width:560px;margin:0 auto 40px;animation:slideIn .7s ease .2s both}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:slideIn .7s ease .3s both}
+.hero-stats{display:flex;gap:48px;justify-content:center;margin-top:64px;padding-top:40px;border-top:1px solid rgba(255,255,255,.1);animation:slideIn .7s ease .4s both}
+.stat-num{font-family:var(--display);font-size:2.8rem;color:var(--sun);line-height:1}
+.stat-lbl{font-size:.78rem;color:rgba(245,237,214,.55);letter-spacing:.5px;margin-top:2px}
+.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:rgba(245,237,214,.4);font-size:.78rem;display:flex;flex-direction:column;align-items:center;gap:6px;animation:floatDown 2s ease infinite}
+.hero-scroll span{width:20px;height:32px;border:2px solid rgba(245,237,214,.3);border-radius:10px;position:relative}
+.hero-scroll span::after{content:'';width:3px;height:8px;background:rgba(245,237,214,.5);border-radius:2px;position:absolute;top:5px;left:50%;transform:translateX(-50%);animation:scrollDot 2s ease infinite}
+
+/* FEATURES */
+.features{padding:100px 6vw;background:var(--parch)}
+.sec-eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--sage);font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.sec-eyebrow::before{content:'';width:24px;height:3px;background:linear-gradient(90deg,var(--wheat),var(--sun));border-radius:2px}
+.sec-h{font-family:var(--display);font-size:clamp(2.4rem,4vw,3.8rem);line-height:.95;letter-spacing:.5px;color:var(--earth);margin-bottom:16px}
+.sec-h em{color:var(--wheat);font-style:normal}
+.sec-sub{font-family:var(--serif);font-style:italic;font-size:1rem;line-height:1.8;color:var(--stone);max-width:540px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
+.feat-card{background:var(--white);border-radius:var(--r-md);padding:32px 28px;box-shadow:var(--sh-1);border:1px solid rgba(0,0,0,.05);transition:all .28s;position:relative;overflow:hidden}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--linen);transition:background .3s}
+.feat-card:hover{transform:translateY(-6px);box-shadow:var(--sh-2)}
+.feat-card:hover::before{background:linear-gradient(90deg,var(--wheat),var(--sun))}
+.feat-ico{font-size:2.6rem;margin-bottom:18px}
+.feat-card h3{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--earth);margin-bottom:10px}
+.feat-card p{font-size:.87rem;line-height:1.7;color:var(--stone)}
+.feat-tag{display:inline-block;margin-top:14px;padding:3px 12px;border-radius:999px;font-size:.72rem;font-weight:700}
+.feat-tag.live{background:rgba(74,124,63,.1);color:var(--sage)}
+.feat-tag.soon{background:rgba(212,146,10,.1);color:var(--wheat)}
+
+/* HOW IT WORKS */
+.how{padding:100px 6vw;background:linear-gradient(160deg,var(--earth),var(--moss));color:var(--dust);position:relative;overflow:hidden}
+.how::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 80%,rgba(106,171,94,.08) 0%,transparent 60%);pointer-events:none}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:52px;position:relative;z-index:1}
+.how-step{text-align:center;position:relative}
+.how-num{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--wheat),var(--sun));display:grid;place-items:center;font-family:var(--display);font-size:1.6rem;color:var(--earth);margin:0 auto 20px;box-shadow:0 4px 18px rgba(212,146,10,.4)}
+.how-step h4{font-family:var(--serif);font-size:1.05rem;font-weight:600;margin-bottom:8px}
+.how-step p{font-size:.84rem;line-height:1.65;color:rgba(245,237,214,.6)}
+
+/* TESTIMONIALS */
+.testi{padding:100px 6vw;background:var(--linen)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
+.testi-card{background:var(--white);border-radius:var(--r-md);padding:28px;box-shadow:var(--sh-1);border:1px solid rgba(0,0,0,.05)}
+.testi-card blockquote{font-family:var(--serif);font-style:italic;font-size:.95rem;line-height:1.75;color:var(--bark);margin-bottom:18px;position:relative;padding-left:20px;border-left:3px solid var(--wheat)}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-ava{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--sage),var(--fern));display:grid;place-items:center;font-size:1.2rem}
+.testi-name{font-weight:600;font-size:.88rem;color:var(--earth)}
+.testi-loc{font-size:.76rem;color:var(--stone)}
+
+/* CTA */
+.cta{padding:100px 6vw;background:var(--parch);text-align:center}
+.cta-box{max-width:700px;margin:0 auto;background:linear-gradient(135deg,var(--earth),var(--moss));border-radius:var(--r-lg);padding:60px 48px;box-shadow:var(--sh-3);position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(240,180,41,.1) 0%,transparent 60%);pointer-events:none}
+.cta-box h2{font-family:var(--display);font-size:clamp(2.2rem,4vw,3.2rem);color:var(--dust);margin-bottom:16px;position:relative;z-index:1}
+.cta-box h2 em{color:var(--sun);font-style:normal}
+.cta-box p{font-size:1rem;line-height:1.8;color:rgba(245,237,214,.65);max-width:440px;margin:0 auto 32px;position:relative;z-index:1}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+
+/* FOOTER */
+footer{background:var(--earth);padding:48px 6vw 28px;color:rgba(245,237,214,.65)}
+.ft-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.ft-brand{font-family:var(--display);font-size:1.6rem;color:var(--dust);letter-spacing:1px}
+.ft-brand span{color:var(--sun)}
+.ft-links{display:flex;gap:20px}
+.ft-links a{color:rgba(245,237,214,.5);text-decoration:none;font-size:.84rem;transition:color .2s}
+.ft-links a:hover{color:var(--dust)}
+.ft-bottom{margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.78rem}
+.helpline{font-family:var(--display);font-size:1.1rem;color:var(--sun);letter-spacing:1px}
+
+/* ANIMATIONS */
+@keyframes slideIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:none}}
+@keyframes pulsate{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.82)}}
+@keyframes floatDown{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+@keyframes scrollDot{0%{top:5px;opacity:1}100%{top:18px;opacity:0}}
+@keyframes fadeReveal{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--linen)}
+::-webkit-scrollbar-thumb{background:var(--sage);border-radius:3px}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .feat-grid,.testi-grid{grid-template-columns:1fr 1fr}
+  .how-grid{grid-template-columns:1fr 1fr;gap:40px 32px}
+  .hero-stats{gap:28px}
+}
+@media(max-width:540px){
+  .feat-grid,.testi-grid,.how-grid{grid-template-columns:1fr}
+  .hero h1{font-size:3rem}
+  .hero-stats{flex-direction:column;gap:16px;align-items:center}
+  .cta-box{padding:40px 24px}
+  .nav-right .nav-link{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="index.html">
+    <div class="nav-logo-box">🌾</div>
+    <span class="nav-brand-name">Krishi<span>Seva</span></span>
+  </a>
+  <div class="nav-right">
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#how" class="nav-link">How It Works</a>
+    <a href="login.html" class="nav-link">Login</a>
+    <a href="login.html" class="btn btn-gold" style="padding:9px 20px;font-size:.84rem">Get Started →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="pulse-dot"></div>
+      India's #1 Smart Farming Platform
+    </div>
+    <h1>EMPOWERING<br><em>EVERY FARMER</em></h1>
+    <p class="hero-p">AI crop diagnosis, live mandi prices, direct market access, crop care guidance, and a complete farm dashboard — built for India's 140 million farmers.</p>
+    <div class="hero-btns">
+      <a href="login.html" class="btn btn-gold btn-lg">🚀 Start Free — Join Now</a>
+      <a href="Front.html" class="btn btn-ghost btn-lg">🌾 Explore Platform</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">18K+</div><div class="stat-lbl">Active Farmers</div></div>
+      <div><div class="stat-num">97%</div><div class="stat-lbl">Diagnosis Accuracy</div></div>
+      <div><div class="stat-num">₹3.2Cr</div><div class="stat-lbl">Farmer Savings</div></div>
+      <div><div class="stat-num">247</div><div class="stat-lbl">Mandis Tracked</div></div>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll<span></span></div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="sec-eyebrow">Platform Features</div>
+  <h2 class="sec-h">EVERYTHING YOU<br><em>NEED TO GROW</em></h2>
+  <p class="sec-sub">One platform that replaces ten apps — from soil to sale, KrishiSeva has you covered.</p>
+
+  <div class="feat-grid">
+    <div class="feat-card reveal">
+      <div class="feat-ico">🤖</div>
+      <h3>AI Crop Doctor</h3>
+      <p>Upload a photo of your crop and get instant disease diagnosis with treatment recommendations from our AI trained on 50,000+ images.</p>
+      <span class="feat-tag live">● Live</span>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-ico">📊</div>
+      <h3>Live Mandi Rates</h3>
+      <p>Real-time prices from 247+ APMC mandis. Compare rates, track trends, and get alerts when your crop hits peak price.</p>
+      <span class="feat-tag live">● Live</span>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-ico">🛒</div>
+      <h3>Crops Marketplace</h3>
+      <p>Buy and sell produce directly. No middlemen, no commission cuts. List your crop in seconds and connect with verified buyers.</p>
+      <span class="feat-tag live">● Live</span>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-ico">🧪</div>
+      <h3>Pesticide & Fertilizer Guide</h3>
+      <p>Crop-specific, season-wise recommendations with exact dosages, application schedules, and safety guidelines.</p>
+      <span class="feat-tag live">● Live</span>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-ico">📱</div>
+      <h3>Smart Dashboard</h3>
+      <p>Weather, crop health scores, earnings analytics, task manager, and alerts — your entire farm at a glance.</p>
+      <span class="feat-tag live">● Live</span>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-ico">🎙️</div>
+      <h3>Voice Assistant</h3>
+      <p>Speak in your language — Hindi, Marathi, Telugu, or more. The AI assistant manages your farm hands-free.</p>
+      <span class="feat-tag soon">◐ Coming Soon</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="sec-eyebrow" style="color:var(--sun)">How It Works</div>
+  <h2 class="sec-h" style="color:var(--dust)">START IN<br><em>4 SIMPLE STEPS</em></h2>
+
+  <div class="how-grid">
+    <div class="how-step reveal">
+      <div class="how-num">1</div>
+      <h4>Sign Up Free</h4>
+      <p>Register with just your phone number. No documents, no fees, no hassle.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="how-num">2</div>
+      <h4>Set Up Your Farm</h4>
+      <p>Add your crops, land area, and location. The AI personalises everything for you.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="how-num">3</div>
+      <h4>Get Smart Insights</h4>
+      <p>Disease alerts, market prices, weather updates, and fertilizer plans — delivered daily.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="how-num">4</div>
+      <h4>Sell & Earn More</h4>
+      <p>List your produce, compare mandis, connect with buyers, and get paid directly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi" id="testimonials">
+  <div class="sec-eyebrow">Farmer Stories</div>
+  <h2 class="sec-h">TRUSTED BY<br><em>REAL FARMERS</em></h2>
+
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <blockquote>"KrishiSeva detected rust in my soybean field 3 days before I could see it. Saved my entire crop worth ₹2.5 lakh."</blockquote>
+      <div class="testi-author">
+        <div class="testi-ava">👨‍🌾</div>
+        <div><div class="testi-name">Rajesh Patil</div><div class="testi-loc">Pune, Maharashtra · 4.2 acres</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <blockquote>"I was selling onions at ₹12/kg locally. KrishiSeva showed me Lasalgaon mandi at ₹28/kg. I earned 2x more in one season."</blockquote>
+      <div class="testi-author">
+        <div class="testi-ava">👩‍🌾</div>
+        <div><div class="testi-name">Sunita Deshmukh</div><div class="testi-loc">Nashik, Maharashtra · 3 acres</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <blockquote>"The fertilizer schedule saved me from over-applying urea. My wheat yield went up 18% and input cost dropped by ₹4,000."</blockquote>
+      <div class="testi-author">
+        <div class="testi-ava">👨‍🌾</div>
+        <div><div class="testi-name">Vikram Singh</div><div class="testi-loc">Indore, MP · 8 acres</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-box">
+    <h2>READY TO GROW<br><em>SMARTER?</em></h2>
+    <p>Join 18,000+ farmers who are earning more, wasting less, and making data-driven decisions every day.</p>
+    <div class="cta-btns">
+      <a href="login.html" class="btn btn-gold btn-lg">🌱 Create Free Account</a>
+      <a href="Front.html" class="btn btn-ghost btn-lg">📊 See Live Demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-brand">🌾 Krishi<span>Seva</span></div>
+    <div class="ft-links">
+      <a href="index.html">Home</a>
+      <a href="Front.html">Platform</a>
+      <a href="login.html">Login</a>
+      <a href="#features">Features</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <p>© 2025 KrishiSeva. Made with 💚 for Bharat's Farmers.</p>
+    <div class="helpline">📞 1800-180-1551 Toll Free</div>
+  </div>
+</footer>
+
+<script>
+const revObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Login — KrishiSeva</title>
+<meta name="description" content="Log in to your KrishiSeva account or create a new one to access AI crop diagnosis, live mandi rates, and your farm dashboard."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Teko:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --earth:#1c2b0e;--moss:#2e4a1a;--sage:#4a7c3f;--fern:#6aab5e;
+  --wheat:#d4920a;--sun:#f0b429;--terra:#8b3a12;--clay:#c0562a;
+  --dust:#f5edd6;--parch:#fdf8ef;--linen:#ece5d0;--bark:#3d2b1f;
+  --stone:#7a6e5f;--sky:#5a8fa8;--rain:#3b6e8f;--white:#ffffff;
+  --r-sm:8px;--r-md:14px;--r-lg:22px;
+  --sh-1:0 2px 12px rgba(28,43,14,.10);--sh-2:0 8px 32px rgba(28,43,14,.16);--sh-3:0 20px 60px rgba(28,43,14,.22);
+  --serif:'Lora',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--display:'Teko',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{font-family:var(--sans);min-height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.6}
+
+/* LEFT — branding panel */
+.brand-panel{background:linear-gradient(160deg,var(--earth) 0%,var(--moss) 50%,#3a6030 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 48px;position:relative;overflow:hidden}
+.brand-panel::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 70%,rgba(106,171,94,.12) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(240,180,41,.08) 0%,transparent 50%);pointer-events:none}
+.bp-content{position:relative;z-index:1;text-align:center;max-width:380px}
+.bp-logo{display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:40px}
+.bp-logo-box{width:52px;height:52px;background:linear-gradient(135deg,var(--wheat),var(--sun));border-radius:14px;display:grid;place-items:center;font-size:26px;box-shadow:0 6px 20px rgba(212,146,10,.45)}
+.bp-logo-name{font-family:var(--display);font-size:2.4rem;letter-spacing:1.5px;color:var(--dust);line-height:1}
+.bp-logo-name span{color:var(--sun)}
+.bp-tagline{font-family:var(--display);font-size:clamp(2rem,3.5vw,3.2rem);line-height:.95;color:var(--dust);margin-bottom:20px;letter-spacing:1px}
+.bp-tagline em{color:var(--sun);font-style:normal;display:block}
+.bp-desc{font-size:.95rem;line-height:1.8;color:rgba(245,237,214,.6);margin-bottom:40px}
+.bp-stats{display:flex;gap:32px;justify-content:center}
+.bp-stat-n{font-family:var(--display);font-size:2rem;color:var(--sun);line-height:1}
+.bp-stat-l{font-size:.72rem;color:rgba(245,237,214,.5);margin-top:2px}
+.bp-features{margin-top:48px;display:flex;flex-direction:column;gap:14px;text-align:left}
+.bp-feat{display:flex;align-items:center;gap:12px;color:rgba(245,237,214,.7);font-size:.88rem}
+.bp-feat-ico{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0}
+
+/* RIGHT — form panel */
+.form-panel{background:var(--parch);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:48px;overflow-y:auto}
+.form-wrap{width:100%;max-width:400px}
+.form-back{display:inline-flex;align-items:center;gap:6px;color:var(--stone);font-size:.84rem;text-decoration:none;margin-bottom:28px;transition:color .2s}
+.form-back:hover{color:var(--earth)}
+.form-title{font-family:var(--display);font-size:2.6rem;color:var(--earth);letter-spacing:1px;line-height:1;margin-bottom:6px}
+.form-subtitle{font-size:.9rem;color:var(--stone);margin-bottom:32px}
+.form-subtitle a{color:var(--sage);font-weight:600;text-decoration:none}
+.form-subtitle a:hover{text-decoration:underline}
+
+/* tabs */
+.auth-tabs{display:flex;gap:0;margin-bottom:28px;background:var(--linen);border-radius:var(--r-sm);padding:4px;overflow:hidden}
+.auth-tab{flex:1;background:transparent;border:none;padding:10px;font-family:var(--sans);font-size:.88rem;font-weight:600;color:var(--stone);cursor:pointer;border-radius:6px;transition:all .2s}
+.auth-tab.on{background:var(--white);color:var(--earth);box-shadow:var(--sh-1)}
+
+/* form fields */
+.field{margin-bottom:18px}
+.field label{display:block;font-size:.78rem;font-weight:600;color:var(--bark);letter-spacing:.3px;text-transform:uppercase;margin-bottom:6px}
+.field input,.field select{width:100%;background:var(--white);border:1.5px solid rgba(0,0,0,.1);border-radius:var(--r-sm);padding:12px 16px;font-family:var(--sans);font-size:.9rem;color:var(--bark);outline:none;transition:border-color .2s}
+.field input:focus,.field select:focus{border-color:var(--sage);box-shadow:0 0 0 3px rgba(74,124,63,.1)}
+.field input::placeholder{color:var(--stone);opacity:.6}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field-hint{font-size:.72rem;color:var(--stone);margin-top:4px}
+
+.pw-wrap{position:relative}
+.pw-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--stone);padding:2px}
+
+.remember-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.remember-row label{display:flex;align-items:center;gap:8px;font-size:.84rem;color:var(--bark);cursor:pointer}
+.remember-row input[type=checkbox]{width:18px;height:18px;accent-color:var(--sage);cursor:pointer}
+.forgot-link{font-size:.82rem;color:var(--sage);text-decoration:none;font-weight:600}
+.forgot-link:hover{text-decoration:underline}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:var(--r-sm);font-family:var(--sans);font-weight:600;font-size:.95rem;cursor:pointer;border:none;text-decoration:none;transition:all .22s;white-space:nowrap}
+.btn-gold{background:linear-gradient(135deg,var(--wheat),var(--sun));color:var(--earth);box-shadow:0 4px 18px rgba(212,146,10,.45)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(212,146,10,.55)}
+.btn-full{width:100%}
+.btn-outline{background:transparent;border:1.5px solid rgba(0,0,0,.12);color:var(--bark)}
+.btn-outline:hover{border-color:var(--sage);color:var(--sage)}
+
+.divider{display:flex;align-items:center;gap:14px;margin:24px 0;color:var(--stone);font-size:.78rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(0,0,0,.1)}
+
+.form-footer{text-align:center;margin-top:28px;font-size:.82rem;color:var(--stone)}
+.form-footer a{color:var(--sage);font-weight:600;text-decoration:none}
+.form-footer a:hover{text-decoration:underline}
+
+/* toast */
+.toast{position:fixed;top:24px;right:24px;background:var(--white);border-radius:var(--r-md);padding:16px 22px;box-shadow:var(--sh-2);border-left:4px solid var(--sage);display:flex;align-items:center;gap:12px;font-size:.88rem;color:var(--bark);transform:translateX(calc(100% + 40px));transition:transform .4s ease;z-index:10000}
+.toast.show{transform:translateX(0)}
+.toast-ico{font-size:1.4rem}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  body{grid-template-columns:1fr}
+  .brand-panel{display:none}
+  .form-panel{padding:32px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- LEFT: Branding -->
+<div class="brand-panel">
+  <div class="bp-content">
+    <div class="bp-logo">
+      <div class="bp-logo-box">🌾</div>
+      <span class="bp-logo-name">Krishi<span>Seva</span></span>
+    </div>
+    <div class="bp-tagline">GROW SMARTER,<em>EARN BETTER</em></div>
+    <p class="bp-desc">India's smartest agri-tech platform — AI crop diagnosis, live mandi rates, direct market access, and a complete farm dashboard.</p>
+    <div class="bp-stats">
+      <div><div class="bp-stat-n">18K+</div><div class="bp-stat-l">Farmers</div></div>
+      <div><div class="bp-stat-n">97%</div><div class="bp-stat-l">Accuracy</div></div>
+      <div><div class="bp-stat-n">₹3.2Cr</div><div class="bp-stat-l">Savings</div></div>
+    </div>
+    <div class="bp-features">
+      <div class="bp-feat"><div class="bp-feat-ico">🤖</div> AI-powered crop disease detection</div>
+      <div class="bp-feat"><div class="bp-feat-ico">📊</div> Real-time mandi prices from 247+ APMCs</div>
+      <div class="bp-feat"><div class="bp-feat-ico">🛒</div> Direct marketplace — zero middlemen</div>
+      <div class="bp-feat"><div class="bp-feat-ico">📱</div> Full farm dashboard & analytics</div>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT: Auth Form -->
+<div class="form-panel">
+  <div class="form-wrap">
+    <a href="index.html" class="form-back">← Back to Home</a>
+
+    <!-- Tabs -->
+    <div class="auth-tabs">
+      <button class="auth-tab on" onclick="showTab('login')">Login</button>
+      <button class="auth-tab" onclick="showTab('register')">Register</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <div class="form-title">Welcome Back</div>
+      <p class="form-subtitle">Log in to manage your farm and market access.</p>
+
+      <div class="field">
+        <label for="loginPhone">Phone Number</label>
+        <input type="tel" id="loginPhone" placeholder="Enter 10-digit mobile number" maxlength="10"/>
+      </div>
+      <div class="field">
+        <label for="loginPass">Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="loginPass" placeholder="Enter your password"/>
+          <button class="pw-toggle" onclick="togglePw('loginPass',this)" type="button">👁</button>
+        </div>
+      </div>
+      <div class="remember-row">
+        <label><input type="checkbox" checked/> Remember me</label>
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </div>
+      <button class="btn btn-gold btn-full" onclick="handleLogin()">🔐 Login to KrishiSeva</button>
+
+      <div class="divider">or continue with</div>
+      <button class="btn btn-outline btn-full" onclick="alert('OTP login coming soon!')">📱 Login with OTP</button>
+
+      <div class="form-footer">
+        Don't have an account? <a href="#" onclick="showTab('register');return false">Register free</a>
+      </div>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div id="registerForm" style="display:none">
+      <div class="form-title">Join KrishiSeva</div>
+      <p class="form-subtitle">Create a free account — it takes 30 seconds.</p>
+
+      <div class="field">
+        <label for="regName">Full Name</label>
+        <input type="text" id="regName" placeholder="e.g. Rajesh Kumar Patil"/>
+      </div>
+      <div class="field">
+        <label for="regPhone">Phone Number</label>
+        <input type="tel" id="regPhone" placeholder="10-digit mobile number" maxlength="10"/>
+      </div>
+      <div class="field">
+        <label for="regPass">Create Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="regPass" placeholder="Min. 6 characters"/>
+          <button class="pw-toggle" onclick="togglePw('regPass',this)" type="button">👁</button>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="regVillage">Village / City</label>
+          <input type="text" id="regVillage" placeholder="e.g. Pune"/>
+        </div>
+        <div class="field">
+          <label for="regState">State</label>
+          <select id="regState">
+            <option value="">Select</option>
+            <option>Maharashtra</option>
+            <option>Madhya Pradesh</option>
+            <option>Uttar Pradesh</option>
+            <option>Gujarat</option>
+            <option>Haryana</option>
+            <option>Karnataka</option>
+            <option>Rajasthan</option>
+            <option>Punjab</option>
+            <option>Tamil Nadu</option>
+            <option>Andhra Pradesh</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="regLand">Land Area (acres) <span style="font-weight:400;text-transform:none;opacity:.6">— optional</span></label>
+        <input type="number" id="regLand" placeholder="e.g. 4.5" step="0.1"/>
+      </div>
+
+      <button class="btn btn-gold btn-full" onclick="handleRegister()" style="margin-top:6px">🌱 Create My Account</button>
+
+      <div class="form-footer">
+        Already have an account? <a href="#" onclick="showTab('login');return false">Login here</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"><span class="toast-ico"></span><span id="toastMsg"></span></div>
+
+<script>
+function showTab(tab){
+  document.querySelectorAll('.auth-tab').forEach((t,i)=>{
+    t.classList.toggle('on',i===(tab==='login'?0:1));
+  });
+  document.getElementById('loginForm').style.display=tab==='login'?'block':'none';
+  document.getElementById('registerForm').style.display=tab==='register'?'block':'none';
+}
+
+function togglePw(id,btn){
+  const inp=document.getElementById(id);
+  const show=inp.type==='password';
+  inp.type=show?'text':'password';
+  btn.textContent=show?'🙈':'👁';
+}
+
+function showToast(ico,msg){
+  const t=document.getElementById('toast');
+  document.querySelector('.toast-ico').textContent=ico;
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+function handleLogin(){
+  const phone=document.getElementById('loginPhone').value.trim();
+  const pass=document.getElementById('loginPass').value;
+  if(!phone||phone.length!==10){showToast('⚠️','Please enter a valid 10-digit phone number.');return;}
+  if(!pass||pass.length<4){showToast('⚠️','Please enter your password.');return;}
+  // Demo credentials check
+  if(phone==='9876543210'&&pass==='farmer123'){
+    showToast('✅','Login successful! Redirecting…');
+    setTimeout(()=>window.location.href='Front.html',1500);
+  } else {
+    showToast('❌','Invalid credentials. Try: 9876543210 / farmer123');
+  }
+}
+
+function handleRegister(){
+  const name=document.getElementById('regName').value.trim();
+  const phone=document.getElementById('regPhone').value.trim();
+  const pass=document.getElementById('regPass').value;
+  if(!name){showToast('⚠️','Please enter your full name.');return;}
+  if(!phone||phone.length!==10){showToast('⚠️','Please enter a valid 10-digit phone number.');return;}
+  if(!pass||pass.length<6){showToast('⚠️','Password must be at least 6 characters.');return;}
+  showToast('✅','Account created! Redirecting to platform…');
+  setTimeout(()=>window.location.href='Front.html',1500);
+}
+
+// Allow Enter key submit
+document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')handleLogin();});
+document.getElementById('regLand').addEventListener('keydown',e=>{if(e.key==='Enter')handleRegister();});
+</script>
+</body>
+</html>

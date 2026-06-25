@@ -1,0 +1,2213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>KrishiSeva — Smart Farm Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Teko:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+<style>
+/* ════════════════════════════════════════════
+   ROOT TOKENS
+════════════════════════════════════════════ */
+:root{
+  --earth:   #1c2b0e;
+  --moss:    #2e4a1a;
+  --sage:    #4a7c3f;
+  --fern:    #6aab5e;
+  --wheat:   #d4920a;
+  --sun:     #f0b429;
+  --terra:   #8b3a12;
+  --clay:    #c0562a;
+  --dust:    #f5edd6;
+  --parch:   #fdf8ef;
+  --linen:   #ece5d0;
+  --bark:    #3d2b1f;
+  --stone:   #7a6e5f;
+  --sky:     #5a8fa8;
+  --rain:    #3b6e8f;
+  --white:   #ffffff;
+  --r-sm:    8px;
+  --r-md:    14px;
+  --r-lg:    22px;
+  --sh-1:    0 2px 12px rgba(28,43,14,.10);
+  --sh-2:    0 8px 32px rgba(28,43,14,.16);
+  --sh-3:    0 20px 60px rgba(28,43,14,.22);
+  --nav-h:   66px;
+  --serif:   'Lora', Georgia, serif;
+  --sans:    'DM Sans', system-ui, sans-serif;
+  --display: 'Teko', sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:var(--sans);
+  background:var(--parch);
+  color:var(--bark);
+  overflow-x:hidden;
+  cursor:default;
+}
+
+/* ── grain overlay ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:.6;
+}
+
+/* ════════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  height:var(--nav-h);
+  display:flex;align-items:center;
+  padding:0 5vw;
+  background:rgba(28,43,14,.96);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(106,171,94,.18);
+}
+.nav-brand{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;
+}
+.nav-logo-box{
+  width:38px;height:38px;
+  background:linear-gradient(135deg,var(--wheat),var(--sun));
+  border-radius:10px;
+  display:grid;place-items:center;
+  font-size:18px;
+  box-shadow:0 4px 14px rgba(212,146,10,.4);
+}
+.nav-brand-name{
+  font-family:var(--display);
+  font-size:1.65rem;letter-spacing:1px;
+  color:var(--dust);line-height:1;
+}
+.nav-brand-name span{color:var(--sun);}
+.nav-links{
+  display:flex;align-items:center;
+  list-style:none;gap:2px;
+  margin-left:auto;
+}
+.nav-links a{
+  color:rgba(245,237,214,.7);
+  text-decoration:none;
+  font-size:.88rem;font-weight:500;
+  padding:7px 15px;border-radius:var(--r-sm);
+  transition:all .2s;letter-spacing:.2px;
+}
+.nav-links a:hover{color:var(--sun);background:rgba(255,255,255,.07);}
+.nav-links a.active{color:var(--sun);}
+.nav-pill{
+  background:linear-gradient(135deg,var(--wheat),var(--clay)) !important;
+  color:var(--white) !important;
+  font-weight:600 !important;
+  margin-left:8px;
+  box-shadow:0 4px 16px rgba(192,86,42,.35);
+}
+.nav-pill:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(192,86,42,.45) !important;}
+
+/* ════════════════════════════════════════════
+   HERO SECTION
+════════════════════════════════════════════ */
+#home{
+  min-height:100vh;
+  padding-top:var(--nav-h);
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  align-items:stretch;
+}
+
+/* left half */
+.hero-left{
+  background:linear-gradient(160deg,var(--earth) 0%,var(--moss) 60%,#3a6030 100%);
+  padding:72px 5vw 72px 6vw;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.hero-left::after{
+  content:'';
+  position:absolute;bottom:-80px;right:-80px;
+  width:320px;height:320px;
+  background:radial-gradient(circle,rgba(106,171,94,.15) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(240,180,41,.12);
+  border:1px solid rgba(240,180,41,.3);
+  color:var(--sun);
+  padding:5px 14px;border-radius:999px;
+  font-size:.75rem;font-weight:600;letter-spacing:1.5px;
+  text-transform:uppercase;margin-bottom:28px;
+  animation:slideIn .6s ease both;
+}
+.pulse-dot{
+  width:7px;height:7px;
+  background:var(--sun);border-radius:50%;
+  animation:pulsate 1.8s ease-in-out infinite;
+}
+.hero-h1{
+  font-family:var(--display);
+  font-size:clamp(3rem,5vw,5rem);
+  line-height:.95;letter-spacing:1px;
+  color:var(--dust);
+  margin-bottom:24px;
+  animation:slideIn .7s ease .08s both;
+}
+.hero-h1 .accent{
+  color:var(--sun);
+  display:block;
+}
+.hero-p{
+  font-size:1rem;line-height:1.8;
+  color:rgba(245,237,214,.72);
+  max-width:400px;margin-bottom:36px;
+  animation:slideIn .7s ease .16s both;
+}
+.hero-btns{
+  display:flex;gap:12px;flex-wrap:wrap;
+  animation:slideIn .7s ease .24s both;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 24px;border-radius:var(--r-sm);
+  font-family:var(--sans);font-weight:600;font-size:.9rem;
+  cursor:pointer;border:none;text-decoration:none;
+  transition:all .22s;white-space:nowrap;
+}
+.btn-gold{
+  background:linear-gradient(135deg,var(--wheat),var(--sun));
+  color:var(--earth);
+  box-shadow:0 4px 18px rgba(212,146,10,.45);
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(212,146,10,.55);}
+.btn-ghost{
+  background:rgba(255,255,255,.08);
+  color:var(--dust);
+  border:1.5px solid rgba(255,255,255,.22);
+}
+.btn-ghost:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.45);}
+
+.hero-stats{
+  display:flex;gap:36px;
+  margin-top:52px;padding-top:36px;
+  border-top:1px solid rgba(255,255,255,.1);
+  animation:slideIn .7s ease .32s both;
+}
+.stat-num{
+  font-family:var(--display);
+  font-size:2.4rem;color:var(--sun);line-height:1;
+}
+.stat-lbl{font-size:.75rem;color:rgba(245,237,214,.55);letter-spacing:.5px;margin-top:2px;}
+
+/* right half — chatbot */
+.hero-right{
+  background:var(--parch);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:40px 5vw;
+  position:relative;
+}
+.hero-right::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 80% 20%,rgba(106,171,94,.08) 0%,transparent 60%),
+    radial-gradient(ellipse at 20% 80%,rgba(212,146,10,.06) 0%,transparent 60%);
+}
+
+/* ════════════════════════════════════════════
+   CHATBOT
+════════════════════════════════════════════ */
+.chatbot-wrap{
+  width:100%;max-width:460px;
+  background:var(--white);
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-3);
+  overflow:hidden;
+  border:1px solid rgba(74,124,63,.12);
+  position:relative;z-index:1;
+  animation:riseUp .8s ease .2s both;
+}
+.chat-top{
+  background:linear-gradient(135deg,var(--earth),var(--moss));
+  padding:16px 20px;
+  display:flex;align-items:center;gap:13px;
+}
+.chat-bot-ava{
+  width:44px;height:44px;
+  background:linear-gradient(135deg,var(--wheat),var(--sun));
+  border-radius:12px;
+  display:grid;place-items:center;
+  font-size:22px;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(212,146,10,.4);
+}
+.chat-top-info h3{
+  font-family:var(--serif);font-size:1rem;font-weight:600;
+  color:var(--dust);
+}
+.chat-top-info p{font-size:.76rem;color:rgba(245,237,214,.65);}
+.online-badge{
+  margin-left:auto;display:flex;align-items:center;gap:5px;
+  font-size:.72rem;color:rgba(245,237,214,.65);
+}
+.online-dot{
+  width:8px;height:8px;background:#5cdb5c;
+  border-radius:50%;animation:pulsate 2s ease infinite;
+}
+
+.chat-msgs{
+  height:300px;overflow-y:auto;
+  padding:18px;
+  display:flex;flex-direction:column;gap:14px;
+  background:#f7fbf5;
+}
+.chat-msgs::-webkit-scrollbar{width:4px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--fern);border-radius:2px;}
+
+.cm{display:flex;gap:8px;max-width:90%;}
+.cm.bot{align-self:flex-start;}
+.cm.usr{align-self:flex-end;flex-direction:row-reverse;}
+.cm-ava{
+  width:32px;height:32px;border-radius:9px;
+  background:linear-gradient(135deg,var(--moss),var(--sage));
+  display:grid;place-items:center;font-size:14px;
+  flex-shrink:0;margin-top:3px;
+}
+.cm-bubble{
+  padding:11px 15px;border-radius:16px;
+  font-size:.87rem;line-height:1.6;
+}
+.cm.bot .cm-bubble{
+  background:var(--white);color:var(--bark);
+  border-bottom-left-radius:4px;
+  box-shadow:0 2px 8px rgba(28,43,14,.08);
+}
+.cm.usr .cm-bubble{
+  background:linear-gradient(135deg,var(--moss),var(--sage));
+  color:var(--white);
+  border-bottom-right-radius:4px;
+}
+.cm-bubble b{color:var(--moss);}
+.cm.usr .cm-bubble b{color:var(--sun);}
+
+.typing-ind{display:flex;gap:4px;align-items:center;padding:2px 0;}
+.typing-ind i{
+  width:7px;height:7px;background:var(--stone);
+  border-radius:50%;display:block;
+  animation:typBounce 1.1s ease infinite;
+}
+.typing-ind i:nth-child(2){animation-delay:.18s;}
+.typing-ind i:nth-child(3){animation-delay:.36s;}
+
+.chat-img-row{
+  padding:10px 14px;
+  border-top:1px solid rgba(0,0,0,.06);
+  background:var(--white);
+  display:flex;align-items:center;gap:10px;
+}
+.img-upload-btn{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(74,124,63,.1);color:var(--moss);
+  border:1.5px dashed var(--fern);
+  border-radius:var(--r-sm);padding:7px 13px;
+  font-size:.78rem;font-weight:600;
+  cursor:pointer;transition:all .2s;
+  font-family:var(--sans);white-space:nowrap;
+}
+.img-upload-btn:hover{background:rgba(74,124,63,.2);}
+.img-upload-btn input{display:none;}
+.img-hint{font-size:.72rem;color:var(--stone);}
+
+.chat-inp-row{
+  padding:12px 14px;
+  border-top:1px solid rgba(0,0,0,.06);
+  background:var(--white);
+  display:flex;gap:8px;
+}
+.chat-inp{
+  flex:1;background:#f4f8f2;
+  border:1.5px solid rgba(0,0,0,.1);
+  border-radius:var(--r-sm);
+  padding:10px 14px;
+  font-family:var(--sans);font-size:.87rem;color:var(--bark);
+  outline:none;transition:border-color .2s;
+}
+.chat-inp:focus{border-color:var(--fern);}
+.chat-send{
+  background:linear-gradient(135deg,var(--moss),var(--sage));
+  color:var(--white);border:none;border-radius:var(--r-sm);
+  padding:0 16px;cursor:pointer;font-size:1.1rem;
+  display:grid;place-items:center;transition:all .2s;
+}
+.chat-send:hover{transform:scale(1.05);}
+
+.chat-quick-tags{
+  padding:10px 14px 0;
+  display:flex;flex-wrap:wrap;gap:6px;
+  background:var(--white);
+}
+.q-tag{
+  background:var(--linen);color:var(--bark);
+  border:none;border-radius:999px;
+  padding:5px 12px;font-size:.74rem;font-weight:500;
+  cursor:pointer;font-family:var(--sans);
+  transition:all .18s;
+}
+.q-tag:hover{background:var(--moss);color:var(--white);}
+
+/* ════════════════════════════════════════════
+   DIVIDER WAVE
+════════════════════════════════════════════ */
+.wave-div{
+  line-height:0;overflow:hidden;margin-bottom:-2px;
+}
+.wave-div svg{display:block;width:100%;}
+
+/* ════════════════════════════════════════════
+   SECTION SHARED
+════════════════════════════════════════════ */
+section.content-sec{padding:90px 6vw;}
+.sec-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--sage);font-size:.75rem;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;
+}
+.sec-eyebrow::before{
+  content:'';width:24px;height:3px;
+  background:linear-gradient(90deg,var(--wheat),var(--sun));
+  border-radius:2px;
+}
+.sec-h{
+  font-family:var(--display);
+  font-size:clamp(2.4rem,4vw,3.8rem);
+  line-height:.95;letter-spacing:.5px;
+  color:var(--earth);margin-bottom:16px;
+}
+.sec-h em{color:var(--wheat);font-style:normal;}
+.sec-sub{
+  font-family:var(--serif);font-style:italic;
+  font-size:1rem;line-height:1.8;
+  color:var(--stone);max-width:540px;
+}
+
+/* ════════════════════════════════════════════
+   MARKET SECTION
+════════════════════════════════════════════ */
+#market{background:var(--parch);}
+.market-layout{
+  display:grid;grid-template-columns:3fr 2fr;
+  gap:40px;margin-top:50px;
+  align-items:start;
+}
+.mkt-services{display:flex;flex-direction:column;gap:14px;}
+.mkt-card{
+  background:var(--white);
+  border-radius:var(--r-md);
+  padding:22px 24px;
+  box-shadow:var(--sh-1);
+  border:1px solid rgba(0,0,0,.05);
+  display:flex;align-items:flex-start;gap:18px;
+  cursor:pointer;
+  transition:all .25s;
+  position:relative;overflow:hidden;
+}
+.mkt-card::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;
+  width:4px;background:var(--linen);
+  transition:background .25s;
+}
+.mkt-card:hover{transform:translateX(5px);box-shadow:var(--sh-2);}
+.mkt-card:hover::before{background:linear-gradient(180deg,var(--wheat),var(--clay));}
+.mkt-icon{
+  width:50px;height:50px;flex-shrink:0;
+  border-radius:12px;display:grid;place-items:center;
+  font-size:22px;
+}
+.mkt-icon.green{background:rgba(74,124,63,.1);}
+.mkt-icon.gold {background:rgba(212,146,10,.1);}
+.mkt-icon.terra{background:rgba(139,58,18,.1);}
+.mkt-icon.sky  {background:rgba(90,143,168,.1);}
+.mkt-body h4{
+  font-family:var(--serif);font-size:1rem;font-weight:600;
+  color:var(--earth);margin-bottom:5px;
+}
+.mkt-body p{font-size:.84rem;line-height:1.6;color:var(--stone);}
+.mkt-tag{
+  display:inline-block;margin-top:8px;
+  background:rgba(74,124,63,.1);color:var(--sage);
+  border-radius:6px;padding:2px 10px;
+  font-size:.73rem;font-weight:600;
+}
+.mkt-tag.alert{background:rgba(212,146,10,.12);color:var(--wheat);}
+
+.mkt-sidebar{display:flex;flex-direction:column;gap:20px;}
+.price-board{
+  background:linear-gradient(160deg,var(--earth) 0%,var(--moss) 100%);
+  border-radius:var(--r-md);padding:26px;color:var(--dust);
+  box-shadow:var(--sh-2);
+}
+.price-board-h{
+  font-family:var(--display);font-size:1.5rem;
+  color:var(--sun);margin-bottom:20px;
+  display:flex;align-items:center;gap:8px;
+}
+.p-live{
+  font-size:.68rem;background:rgba(240,180,41,.2);
+  color:var(--sun);border-radius:999px;
+  padding:3px 10px;font-family:var(--sans);font-weight:600;
+  letter-spacing:.5px;text-transform:uppercase;
+  animation:blinkBg 2s ease infinite;
+}
+.pr{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:11px 0;border-bottom:1px solid rgba(255,255,255,.1);
+}
+.pr:last-child{border-bottom:none;}
+.pr-crop{display:flex;align-items:center;gap:10px;font-size:.9rem;font-weight:500;}
+.pr-crop-icon{font-size:1.2rem;}
+.pr-val{font-size:.95rem;font-weight:600;}
+.pr-chg{font-size:.72rem;margin-left:6px;font-weight:700;}
+.chg-up{color:#6ddf6d;}.chg-dn{color:#f07070;}
+
+.mkt-filter-box{
+  background:var(--white);border-radius:var(--r-md);
+  padding:22px;box-shadow:var(--sh-1);
+  border:1px solid rgba(0,0,0,.05);
+}
+.mkt-filter-box h4{
+  font-family:var(--serif);font-size:1rem;font-weight:600;
+  color:var(--earth);margin-bottom:14px;
+}
+.filter-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+.fchip{
+  background:var(--linen);color:var(--stone);
+  border:none;border-radius:999px;
+  padding:6px 14px;font-size:.78rem;font-weight:500;
+  cursor:pointer;font-family:var(--sans);
+  transition:all .18s;
+}
+.fchip.on,.fchip:hover{background:var(--earth);color:var(--sun);}
+.market-inp{
+  width:100%;background:#f7f4ee;
+  border:1.5px solid rgba(0,0,0,.1);
+  border-radius:var(--r-sm);
+  padding:10px 14px;font-family:var(--sans);
+  font-size:.87rem;color:var(--bark);outline:none;
+  transition:border-color .2s;
+}
+.market-inp:focus{border-color:var(--sage);}
+.list-btn{
+  width:100%;margin-top:12px;
+  background:linear-gradient(135deg,var(--wheat),var(--clay));
+  color:var(--white);border:none;border-radius:var(--r-sm);
+  padding:12px;font-family:var(--sans);font-size:.9rem;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .22s;box-shadow:0 4px 16px rgba(192,86,42,.3);
+}
+.list-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(192,86,42,.4);}
+
+/* ════════════════════════════════════════════
+   PESTICIDES / FERTILIZERS
+════════════════════════════════════════════ */
+#pesticides{background:var(--linen);}
+.pf-top{
+  display:flex;justify-content:space-between;
+  align-items:flex-end;flex-wrap:wrap;gap:24px;
+  margin-bottom:40px;
+}
+.crop-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+.ctab{
+  display:flex;flex-direction:column;align-items:center;
+  gap:5px;padding:11px 18px;
+  border-radius:var(--r-sm);
+  border:2px solid rgba(0,0,0,.1);
+  background:var(--white);cursor:pointer;
+  font-size:.78rem;font-weight:600;color:var(--stone);
+  font-family:var(--sans);transition:all .2s;min-width:70px;
+}
+.ctab .ti{font-size:1.7rem;}
+.ctab.on,.ctab:hover{
+  background:var(--earth);color:var(--sun);
+  border-color:var(--earth);
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(28,43,14,.28);
+}
+.pf-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:auto auto;
+  gap:24px;
+}
+.pf-panel{
+  background:var(--white);border-radius:var(--r-md);
+  padding:26px;box-shadow:var(--sh-1);
+  border:1px solid rgba(0,0,0,.05);
+  transition:box-shadow .2s;
+}
+.pf-panel:hover{box-shadow:var(--sh-2);}
+.pp-head{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.pp-ico{
+  width:46px;height:46px;border-radius:11px;
+  display:grid;place-items:center;font-size:20px;
+}
+.pp-ico.red{background:rgba(192,86,42,.12);}
+.pp-ico.grn{background:rgba(74,124,63,.12);}
+.pp-head-txt h3{
+  font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--earth);
+}
+.pp-head-txt p{font-size:.78rem;color:var(--stone);}
+.pf-item{
+  padding:12px 0;border-bottom:1px dashed rgba(0,0,0,.09);
+}
+.pf-item:last-child{border-bottom:none;}
+.pf-iname{
+  font-size:.9rem;font-weight:600;color:var(--bark);margin-bottom:4px;
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+}
+.pf-idesc{font-size:.82rem;line-height:1.6;color:var(--stone);}
+.badge{
+  display:inline-block;padding:2px 9px;
+  border-radius:6px;font-size:.7rem;font-weight:700;
+}
+.badge.ok {background:rgba(74,124,63,.12);color:var(--sage);}
+.badge.warn{background:rgba(212,146,10,.13);color:var(--wheat);}
+.badge.bad {background:rgba(192,86,42,.13);color:var(--clay);}
+
+.pf-schedule{
+  grid-column:1/-1;
+  background:linear-gradient(135deg,var(--earth),#304820);
+  border-radius:var(--r-md);
+  padding:28px;color:var(--dust);
+  box-shadow:var(--sh-2);
+}
+.pf-sched-h{
+  font-family:var(--display);font-size:1.6rem;
+  color:var(--sun);margin-bottom:20px;
+}
+.sched-table{width:100%;border-collapse:collapse;}
+.sched-table th{
+  text-align:left;font-size:.73rem;font-weight:600;
+  letter-spacing:.8px;text-transform:uppercase;
+  color:rgba(245,237,214,.5);padding-bottom:12px;
+}
+.sched-table td{
+  padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);
+  font-size:.86rem;vertical-align:middle;
+}
+.sched-table tr:last-child td{border-bottom:none;}
+.status-pill{
+  display:inline-block;padding:3px 11px;
+  border-radius:999px;font-size:.72rem;font-weight:700;
+}
+.sp-due{background:rgba(240,180,41,.2);color:var(--sun);}
+.sp-done{background:rgba(109,223,109,.18);color:#6ddf6d;}
+.sp-soon{background:rgba(255,255,255,.1);color:rgba(245,237,214,.6);}
+
+/* ════════════════════════════════════════════
+   DASHBOARD
+════════════════════════════════════════════ */
+#dashboard{background:#eef2ea;}
+.dash-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-top:44px;
+}
+.dc{
+  background:var(--white);border-radius:var(--r-md);
+  padding:22px;box-shadow:var(--sh-1);
+  border:1px solid rgba(0,0,0,.05);
+  transition:all .22s;
+}
+.dc:hover{transform:translateY(-3px);box-shadow:var(--sh-2);}
+.dc.span2{grid-column:span 2;}
+.dc.span4{grid-column:span 4;}
+
+/* weather */
+.dc.weather{
+  background:linear-gradient(135deg,var(--rain),var(--sky));
+  color:var(--white);grid-column:span 2;
+}
+.wx-top{font-size:.82rem;opacity:.8;margin-bottom:12px;font-weight:500;}
+.wx-main{display:flex;align-items:center;gap:20px;margin-bottom:16px;}
+.wx-temp{font-family:var(--display);font-size:4rem;line-height:1;}
+.wx-ico{font-size:3.2rem;}
+.wx-cond{font-size:.88rem;opacity:.8;margin-top:4px;}
+.wx-details{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.wx-d{font-size:.8rem;opacity:.78;}
+.wx-d strong{display:block;font-size:.95rem;opacity:1;margin-top:1px;}
+
+/* metric cards */
+.dc-ico{font-size:1.8rem;margin-bottom:10px;}
+.dc-val{
+  font-family:var(--display);font-size:2.6rem;line-height:1;
+  margin-bottom:4px;
+}
+.dc-lbl{font-size:.75rem;color:var(--stone);font-weight:600;letter-spacing:.4px;text-transform:uppercase;}
+.dc-chg{font-size:.8rem;font-weight:600;margin-top:8px;display:flex;align-items:center;gap:4px;}
+.dc-chg.up{color:var(--sage);}
+.dc-chg.dn{color:var(--clay);}
+
+/* health bars */
+.health-wrap{margin-top:14px;display:flex;flex-direction:column;gap:13px;}
+.h-row{display:flex;align-items:center;gap:12px;}
+.h-lbl{font-size:.82rem;font-weight:600;width:70px;flex-shrink:0;}
+.h-track{flex:1;height:9px;background:rgba(0,0,0,.08);border-radius:5px;overflow:hidden;}
+.h-fill{height:100%;border-radius:5px;transition:width 1.2s ease;}
+.h-num{font-size:.76rem;font-weight:700;width:30px;text-align:right;}
+
+/* alerts */
+.alerts-list{display:flex;flex-direction:column;gap:0;}
+.a-item{
+  display:flex;gap:12px;padding:12px 0;
+  border-bottom:1px dashed rgba(0,0,0,.08);
+  align-items:flex-start;
+}
+.a-item:last-child{border-bottom:none;}
+.a-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.a-dot.hi{background:#e84545;box-shadow:0 0 0 3px rgba(232,69,69,.15);}
+.a-dot.md{background:var(--wheat);}
+.a-dot.lo{background:var(--fern);}
+.a-txt{font-size:.85rem;line-height:1.45;flex:1;}
+.a-txt strong{color:var(--earth);display:block;margin-bottom:2px;}
+.a-time{font-size:.72rem;color:var(--stone);margin-top:2px;}
+
+/* tasks */
+.tasks-list{display:flex;flex-direction:column;gap:0;}
+.t-item{
+  display:flex;align-items:center;gap:11px;
+  padding:10px 0;border-bottom:1px dashed rgba(0,0,0,.08);
+}
+.t-item:last-child{border-bottom:none;}
+.t-cb{
+  width:22px;height:22px;border-radius:6px;
+  border:2px solid var(--fern);flex-shrink:0;
+  cursor:pointer;display:grid;place-items:center;
+  font-size:12px;transition:all .2s;
+}
+.t-cb.done{background:var(--fern);border-color:var(--fern);color:var(--white);}
+.t-txt{font-size:.87rem;flex:1;}
+.t-txt.done{text-decoration:line-through;color:var(--stone);}
+.t-when{font-size:.72rem;color:var(--stone);font-weight:600;white-space:nowrap;}
+.t-when.urgent{color:var(--clay);font-weight:700;}
+
+/* earnings chart */
+.chart-wrap{margin-top:14px;position:relative;height:90px;}
+.chart-wrap svg{width:100%;height:100%;}
+.chart-month-labels{
+  display:flex;justify-content:space-between;
+  font-size:.71rem;color:var(--stone);margin-top:5px;padding:0 2px;
+}
+
+/* summary row */
+.dc.sum-row{
+  grid-column:span 4;
+  background:linear-gradient(135deg,var(--moss),var(--sage));
+  color:var(--white);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:20px;
+}
+.sum-stat{text-align:center;}
+.sum-stat-n{font-family:var(--display);font-size:2rem;color:var(--sun);}
+.sum-stat-l{font-size:.75rem;opacity:.7;margin-top:2px;}
+
+/* dc headings */
+.dc h3{
+  font-family:var(--serif);font-size:1rem;font-weight:600;
+  color:var(--earth);margin-bottom:3px;
+}
+.dc .sub{font-size:.77rem;color:var(--stone);margin-bottom:12px;}
+
+/* ════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════ */
+footer{
+  background:var(--earth);
+  padding:60px 6vw 30px;
+  color:rgba(245,237,214,.65);
+}
+.ft-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px;margin-bottom:48px;
+}
+.ft-brand h2{
+  font-family:var(--display);font-size:2rem;
+  color:var(--dust);letter-spacing:1px;margin-bottom:14px;
+}
+.ft-brand h2 span{color:var(--sun);}
+.ft-brand p{font-size:.87rem;line-height:1.75;max-width:270px;}
+.ft-col h4{
+  font-size:.75rem;font-weight:600;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--sun);margin-bottom:16px;
+}
+.ft-col a{
+  display:block;font-size:.87rem;
+  color:rgba(245,237,214,.6);text-decoration:none;
+  margin-bottom:9px;transition:color .2s;
+}
+.ft-col a:hover{color:var(--dust);}
+.ft-bottom{
+  border-top:1px solid rgba(255,255,255,.1);
+  padding-top:24px;
+  display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:12px;
+}
+.ft-bottom p{font-size:.82rem;}
+.helpline{
+  font-family:var(--display);font-size:1.2rem;
+  color:var(--sun);letter-spacing:1px;
+}
+
+/* ════════════════════════════════════════════
+   ANIMATIONS
+════════════════════════════════════════════ */
+@keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes riseUp {from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}
+@keyframes pulsate{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.6;transform:scale(.82);}}
+@keyframes typBounce{0%,80%,100%{transform:translateY(0);}40%{transform:translateY(-7px);}}
+@keyframes blinkBg{0%,100%{opacity:1;}50%{opacity:.6;}}
+@keyframes fadeReveal{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* ════════════════════════════════════════════
+   SCROLLBAR
+════════════════════════════════════════════ */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--linen);}
+::-webkit-scrollbar-thumb{background:var(--sage);border-radius:3px;}
+
+/* ════════════════════════════════════════════
+   HAMBURGER
+════════════════════════════════════════════ */
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px;margin-left:auto;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--dust);margin:4px 0;border-radius:2px;transition:all .25s;}
+
+/* ════════════════════════════════════════════
+   MARKETPLACE
+════════════════════════════════════════════ */
+#marketplace{background:var(--parch);}
+.mp-toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:32px 0 18px;}
+.mp-search{flex:1;min-width:200px;background:var(--white);border:1.5px solid rgba(0,0,0,.1);border-radius:var(--r-sm);padding:11px 16px 11px 40px;font-family:var(--sans);font-size:.88rem;color:var(--bark);outline:none;transition:border-color .2s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%237a6e5f' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001l3.85 3.85a1 1 0 001.415-1.414l-3.85-3.85zm-5.242.656a5 5 0 110-10 5 5 0 010 10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:14px center;}
+.mp-search:focus{border-color:var(--sage);}
+.mp-sort{background:var(--white);border:1.5px solid rgba(0,0,0,.1);border-radius:var(--r-sm);padding:10px 14px;font-family:var(--sans);font-size:.85rem;color:var(--bark);cursor:pointer;outline:none;}
+.mp-cats{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px;}
+.mp-cat{background:var(--linen);color:var(--stone);border:none;border-radius:999px;padding:6px 16px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all .18s;}
+.mp-cat.on,.mp-cat:hover{background:var(--earth);color:var(--sun);}
+
+.mp-trending{background:linear-gradient(135deg,var(--earth),var(--moss));border-radius:var(--r-md);padding:20px 24px;margin-bottom:24px;color:var(--dust);display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.mp-trending h4{font-family:var(--display);font-size:1.3rem;color:var(--sun);white-space:nowrap;}
+.trend-tags{display:flex;gap:8px;flex-wrap:wrap;}
+.trend-tag{background:rgba(240,180,41,.15);color:var(--sun);border:1px solid rgba(240,180,41,.3);border-radius:999px;padding:4px 14px;font-size:.78rem;font-weight:600;display:flex;align-items:center;gap:5px;}
+.trend-tag .t-arr{font-size:.72rem;}
+
+.mp-season{background:linear-gradient(135deg,rgba(74,124,63,.08),rgba(212,146,10,.06));border:1.5px solid rgba(74,124,63,.15);border-radius:var(--r-md);padding:16px 22px;margin-bottom:28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.mp-season-badge{background:var(--sage);color:var(--white);border-radius:8px;padding:5px 14px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.mp-season p{font-size:.85rem;color:var(--stone);line-height:1.5;}
+.mp-season-crops{display:flex;gap:8px;margin-left:auto;}
+.mp-season-crop{background:var(--white);border-radius:8px;padding:4px 12px;font-size:.78rem;font-weight:600;color:var(--bark);box-shadow:var(--sh-1);}
+
+.mp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.crop-card{background:var(--white);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--sh-1);border:1px solid rgba(0,0,0,.05);transition:all .25s;position:relative;}
+.crop-card:hover{transform:translateY(-5px);box-shadow:var(--sh-2);}
+.cc-img{height:140px;display:grid;place-items:center;font-size:4rem;position:relative;}
+.cc-img.grain{background:linear-gradient(135deg,#f5edd6,#e8dfc0);}
+.cc-img.veg{background:linear-gradient(135deg,#e8f5e0,#d0eac4);}
+.cc-img.fruit{background:linear-gradient(135deg,#fef3d6,#fde8b0);}
+.cc-badge{position:absolute;top:10px;right:10px;padding:3px 10px;border-radius:6px;font-size:.7rem;font-weight:700;}
+.cc-badge.organic{background:rgba(74,124,63,.15);color:var(--sage);}
+.cc-badge.non-organic{background:rgba(139,58,18,.1);color:var(--clay);}
+.cc-body{padding:16px;}
+.cc-name{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--earth);margin-bottom:6px;}
+.cc-price{font-family:var(--display);font-size:1.6rem;color:var(--wheat);line-height:1;margin-bottom:8px;}
+.cc-price small{font-size:.75rem;color:var(--stone);font-family:var(--sans);}
+.cc-meta{font-size:.78rem;color:var(--stone);line-height:1.7;}
+.cc-meta span{display:block;}
+.cc-actions{display:flex;gap:8px;padding:0 16px 16px;}
+.cc-buy{flex:1;background:linear-gradient(135deg,var(--wheat),var(--clay));color:var(--white);border:none;border-radius:var(--r-sm);padding:9px;font-family:var(--sans);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.cc-buy:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(192,86,42,.3);}
+.cc-view{flex:1;background:rgba(74,124,63,.1);color:var(--sage);border:none;border-radius:var(--r-sm);padding:9px;font-family:var(--sans);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.cc-view:hover{background:rgba(74,124,63,.2);}
+
+/* ════════════════════════════════════════════
+   MANDI RATES DASHBOARD
+════════════════════════════════════════════ */
+#mandi{background:var(--linen);}
+.mandi-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:36px 0 28px;}
+.mk{background:var(--white);border-radius:var(--r-md);padding:20px;box-shadow:var(--sh-1);border:1px solid rgba(0,0,0,.05);transition:all .22s;}
+.mk:hover{transform:translateY(-3px);box-shadow:var(--sh-2);}
+.mk-ico{font-size:1.6rem;margin-bottom:8px;}
+.mk-val{font-family:var(--display);font-size:2.2rem;line-height:1;margin-bottom:3px;}
+.mk-lbl{font-size:.73rem;color:var(--stone);font-weight:600;letter-spacing:.4px;text-transform:uppercase;}
+
+.mandi-layout{display:grid;grid-template-columns:3fr 2fr;gap:24px;margin-bottom:28px;}
+.mandi-table-wrap{background:var(--white);border-radius:var(--r-md);padding:24px;box-shadow:var(--sh-1);border:1px solid rgba(0,0,0,.05);overflow-x:auto;}
+.mandi-table-wrap h3{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--earth);margin-bottom:4px;}
+.mandi-ts{font-size:.73rem;color:var(--stone);margin-bottom:16px;display:flex;align-items:center;gap:6px;}
+.mandi-ts .live-dot{width:6px;height:6px;background:#5cdb5c;border-radius:50%;animation:pulsate 2s ease infinite;}
+.mandi-tbl{width:100%;border-collapse:collapse;font-size:.84rem;}
+.mandi-tbl th{text-align:left;font-size:.72rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--stone);padding:10px 8px;border-bottom:2px solid rgba(0,0,0,.08);}
+.mandi-tbl td{padding:10px 8px;border-bottom:1px solid rgba(0,0,0,.05);vertical-align:middle;}
+.mandi-tbl tr:hover{background:rgba(74,124,63,.04);}
+.m-trend{font-weight:700;font-size:.78rem;}
+.m-trend.up{color:var(--sage);}
+.m-trend.dn{color:#e84545;}
+
+.mandi-chart-wrap{background:var(--white);border-radius:var(--r-md);padding:24px;box-shadow:var(--sh-1);border:1px solid rgba(0,0,0,.05);}
+.mandi-chart-wrap h3{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--earth);margin-bottom:16px;}
+
+.mandi-bottom{display:grid;grid-template-columns:2fr 3fr;gap:24px;}
+.mandi-map-wrap{background:linear-gradient(160deg,var(--earth),var(--moss));border-radius:var(--r-md);padding:24px;color:var(--dust);box-shadow:var(--sh-2);}
+.mandi-map-wrap h3{font-family:var(--display);font-size:1.4rem;color:var(--sun);margin-bottom:16px;}
+.map-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;font-size:.75rem;}
+.map-legend-item{display:flex;align-items:center;gap:5px;}
+.map-legend-dot{width:10px;height:10px;border-radius:3px;}
+
+.mandi-insights{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.mi-card{background:var(--white);border-radius:var(--r-md);padding:20px;box-shadow:var(--sh-1);border:1px solid rgba(0,0,0,.05);transition:all .22s;}
+.mi-card:hover{transform:translateY(-3px);box-shadow:var(--sh-2);}
+.mi-card h4{font-family:var(--serif);font-size:.95rem;font-weight:600;color:var(--earth);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.mi-list{list-style:none;font-size:.82rem;color:var(--stone);}
+.mi-list li{padding:5px 0;border-bottom:1px dashed rgba(0,0,0,.06);display:flex;justify-content:space-between;align-items:center;}
+.mi-list li:last-child{border-bottom:none;}
+.mi-val{font-weight:700;color:var(--bark);}
+
+.mandi-callout{margin-top:24px;background:rgba(255,255,255,.65);backdrop-filter:blur(12px);border:1.5px solid rgba(74,124,63,.15);border-radius:var(--r-md);padding:22px 28px;display:flex;align-items:center;gap:18px;}
+.mandi-callout-ico{font-size:2.4rem;flex-shrink:0;}
+.mandi-callout p{font-size:.9rem;line-height:1.7;color:var(--bark);}
+.mandi-callout p strong{color:var(--sage);}
+
+/* ════════════════════════════════════════════
+   ENHANCED DASHBOARD
+════════════════════════════════════════════ */
+.dash-profile{display:flex;align-items:center;gap:20px;background:var(--white);border-radius:var(--r-md);padding:22px 26px;box-shadow:var(--sh-1);border:1px solid rgba(0,0,0,.05);margin-top:36px;margin-bottom:20px;}
+.dp-avatar{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--wheat),var(--sun));display:grid;place-items:center;font-size:2rem;flex-shrink:0;box-shadow:0 4px 14px rgba(212,146,10,.3);}
+.dp-info h3{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--earth);}
+.dp-info p{font-size:.82rem;color:var(--stone);}
+.dp-badges{margin-left:auto;display:flex;gap:8px;}
+.dp-badge{background:rgba(74,124,63,.1);color:var(--sage);border-radius:8px;padding:5px 14px;font-size:.75rem;font-weight:600;}
+
+.dash-kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:20px;}
+.dk{background:var(--white);border-radius:var(--r-md);padding:16px;box-shadow:var(--sh-1);border:1px solid rgba(0,0,0,.05);text-align:center;transition:all .22s;}
+.dk:hover{transform:translateY(-3px);box-shadow:var(--sh-2);}
+.dk-ico{font-size:1.5rem;margin-bottom:6px;}
+.dk-val{font-family:var(--display);font-size:1.8rem;line-height:1;margin-bottom:2px;}
+.dk-lbl{font-size:.7rem;color:var(--stone);font-weight:600;letter-spacing:.3px;text-transform:uppercase;}
+
+.dash-quick{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+.dq-btn{display:flex;align-items:center;gap:8px;background:var(--white);border:1.5px solid rgba(0,0,0,.08);border-radius:var(--r-sm);padding:10px 18px;font-family:var(--sans);font-size:.84rem;font-weight:600;color:var(--bark);cursor:pointer;transition:all .2s;white-space:nowrap;}
+.dq-btn:hover{background:var(--earth);color:var(--sun);border-color:var(--earth);transform:translateY(-2px);box-shadow:var(--sh-1);}
+.dq-btn .dq-ico{font-size:1.1rem;}
+
+/* ════════════════════════════════════════════
+   INNOVATION SHOWCASE
+════════════════════════════════════════════ */
+#innovation{background:linear-gradient(160deg,var(--earth) 0%,#1a3510 50%,var(--moss) 100%);padding:90px 6vw;position:relative;overflow:hidden;}
+#innovation::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 70%,rgba(106,171,94,.1) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(240,180,41,.06) 0%,transparent 50%);pointer-events:none;}
+.inno-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px;position:relative;z-index:1;}
+.inno-card{background:rgba(255,255,255,.07);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:26px;transition:all .3s;cursor:default;}
+.inno-card:hover{background:rgba(255,255,255,.12);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.25);border-color:rgba(240,180,41,.25);}
+.inno-ico{font-size:2.2rem;margin-bottom:14px;}
+.inno-card h4{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--dust);margin-bottom:8px;}
+.inno-card p{font-size:.82rem;line-height:1.65;color:rgba(245,237,214,.6);}
+.inno-status{display:inline-block;margin-top:12px;padding:3px 12px;border-radius:999px;font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.inno-status.live{background:rgba(92,219,92,.15);color:#6ddf6d;}
+.inno-status.soon{background:rgba(240,180,41,.15);color:var(--sun);}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+@media(max-width:960px){
+  #home{grid-template-columns:1fr;}
+  .hero-left{padding:60px 6vw 50px;}
+  .hero-right{padding:40px 6vw 60px;}
+  .chatbot-wrap{max-width:100%;}
+  section.content-sec{padding:64px 5vw;}
+  .market-layout{grid-template-columns:1fr;}
+  .pf-grid{grid-template-columns:1fr;}
+  .pf-schedule{grid-column:1;}
+  .dash-grid{grid-template-columns:1fr 1fr;}
+  .dc.span2,.dc.weather,.dc.span4,.dc.sum-row{grid-column:span 2;}
+  .ft-grid{grid-template-columns:1fr 1fr;}
+  .hamburger{display:flex;flex-direction:column;justify-content:center;}
+  .nav-links{display:none;position:absolute;top:var(--nav-h);left:0;right:0;background:rgba(28,43,14,.98);flex-direction:column;padding:16px 5vw;gap:2px;border-bottom:1px solid rgba(106,171,94,.18);}
+  .nav-links.open{display:flex;}
+  .mp-grid{grid-template-columns:1fr 1fr;}
+  .mandi-kpis{grid-template-columns:1fr 1fr;}
+  .mandi-layout{grid-template-columns:1fr;}
+  .mandi-bottom{grid-template-columns:1fr;}
+  .mandi-insights{grid-template-columns:1fr;}
+  .inno-grid{grid-template-columns:1fr 1fr;}
+  .dash-kpis{grid-template-columns:repeat(3,1fr);}
+  .dash-profile{flex-wrap:wrap;}
+  .dp-badges{margin-left:0;}
+}
+@media(max-width:540px){
+  .dash-grid{grid-template-columns:1fr;}
+  .dc.span2,.dc.weather,.dc.span4,.dc.sum-row{grid-column:span 1;}
+  .hero-stats{gap:20px;}
+  .hero-h1{font-size:2.6rem;}
+  .mp-grid{grid-template-columns:1fr;}
+  .mandi-kpis{grid-template-columns:1fr;}
+  .inno-grid{grid-template-columns:1fr;}
+  .dash-kpis{grid-template-columns:1fr 1fr;}
+  .dash-quick{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     NAV
+══════════════════════════════════════ -->
+<nav id="mainNav">
+  <a class="nav-brand" href="#home">
+    <div class="nav-logo-box">🌾</div>
+    <span class="nav-brand-name">Krishi<span>Seva</span></span>
+  </a>
+  <button class="hamburger" id="hamBtn" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="#home"        class="active">Home</a></li>
+    <li><a href="#marketplace" >Marketplace</a></li>
+    <li><a href="#mandi"       >Mandi Rates</a></li>
+    <li><a href="#market"      >Market</a></li>
+    <li><a href="#pesticides"  >Crop Care</a></li>
+    <li><a href="#dashboard"   >Dashboard</a></li>
+    <li><a href="#innovation"  >Innovation</a></li>
+    <li><a href="#home" class="nav-pill btn">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HERO + CHATBOT
+══════════════════════════════════════ -->
+<section id="home">
+
+  <!-- LEFT: hero copy -->
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="pulse-dot"></div>
+      AI-Powered Farm Intelligence
+    </div>
+    <h1 class="hero-h1">
+      GROW SMARTER,<br>
+      <span class="accent">EARN BETTER</span>
+    </h1>
+    <p class="hero-p">
+      KrishiSeva brings AI crop-disease detection, real-time mandi prices, personalised crop-care guidance, and a full farm dashboard — all in one place built for India's farmers.
+    </p>
+    <div class="hero-btns">
+      <a href="#market"    class="btn btn-gold">🛒 Explore Market</a>
+      <a href="#dashboard" class="btn btn-ghost">📊 My Dashboard</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">18K+</div>
+        <div class="stat-lbl">Farmers</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">97%</div>
+        <div class="stat-lbl">Disease Accuracy</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">₹3.2Cr</div>
+        <div class="stat-lbl">Savings Generated</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: AI chatbot -->
+  <div class="hero-right">
+    <div class="chatbot-wrap">
+
+      <!-- header -->
+      <div class="chat-top">
+        <div class="chat-bot-ava">🤖</div>
+        <div class="chat-top-info">
+          <h3>KrishiBot — AI Crop Advisor</h3>
+          <p>Analyzes images · predicts disease outbreaks · gives treatment advice</p>
+        </div>
+        <div class="online-badge"><div class="online-dot"></div>Live</div>
+      </div>
+
+      <!-- quick suggestion tags -->
+      <div class="chat-quick-tags">
+        <button class="q-tag" onclick="quickAsk('My wheat leaves are turning yellow')">🌾 Yellow wheat leaves</button>
+        <button class="q-tag" onclick="quickAsk('Brown spots on tomato fruit')">🍅 Brown tomato spots</button>
+        <button class="q-tag" onclick="quickAsk('Best fertilizer for rice this season?')">🌱 Rice fertilizer</button>
+      </div>
+
+      <!-- messages -->
+      <div class="chat-msgs" id="chatMsgs">
+        <div class="cm bot">
+          <div class="cm-ava">🌿</div>
+          <div class="cm-bubble">
+            <b>Namaste, Kisan! 🙏</b><br>
+            I'm KrishiBot — your AI crop advisor. Upload a photo of your crop <em>or</em> describe what you're seeing and I'll diagnose diseases, predict outbreaks, and recommend treatments instantly.
+          </div>
+        </div>
+      </div>
+
+      <!-- image upload -->
+      <div class="chat-img-row">
+        <label class="img-upload-btn">
+          📷 Upload Crop Photo
+          <input type="file" accept="image/*" id="fileInput" onchange="handleFile(this)"/>
+        </label>
+        <span class="img-hint">JPG / PNG — AI will analyse</span>
+      </div>
+
+      <!-- text input -->
+      <div class="chat-inp-row">
+        <input  class="chat-inp" id="chatInp" type="text"
+                placeholder="Describe your crop problem…"
+                onkeydown="if(event.key==='Enter')sendMsg()"/>
+        <button class="chat-send" onclick="sendMsg()">➤</button>
+      </div>
+
+    </div><!-- /chatbot-wrap -->
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════
+     CROPS MARKETPLACE
+══════════════════════════════════════ -->
+<section id="marketplace" class="content-sec">
+  <div class="sec-eyebrow">Available Crops Marketplace</div>
+  <h2 class="sec-h">FRESH FROM <br><em>THE FARM</em></h2>
+  <p class="sec-sub">Buy and sell produce directly on KrishiSeva — fresh crops, fair prices, zero middlemen.</p>
+
+  <!-- Toolbar -->
+  <div class="mp-toolbar">
+    <input class="mp-search" type="text" id="mpSearch" placeholder="Search crops, farmers, locations…" oninput="filterCrops()"/>
+    <select class="mp-sort" id="mpSort" onchange="sortCrops()">
+      <option value="default">Sort by</option>
+      <option value="price-asc">Price: Low → High</option>
+      <option value="price-desc">Price: High → Low</option>
+      <option value="fresh">Freshness</option>
+      <option value="popular">Popularity</option>
+    </select>
+  </div>
+  <div class="mp-cats" id="mpCats">
+    <button class="mp-cat on" onclick="filterCat(this,'all')">All</button>
+    <button class="mp-cat" onclick="filterCat(this,'grain')">🌾 Grains</button>
+    <button class="mp-cat" onclick="filterCat(this,'veg')">🥬 Vegetables</button>
+    <button class="mp-cat" onclick="filterCat(this,'fruit')">🍎 Fruits</button>
+    <button class="mp-cat" onclick="filterCat(this,'cash')">🏭 Cash Crops</button>
+    <button class="mp-cat" onclick="filterCat(this,'seasonal')">🌿 Seasonal</button>
+  </div>
+
+  <!-- Trending -->
+  <div class="mp-trending reveal">
+    <h4>🔥 Trending Now</h4>
+    <div class="trend-tags">
+      <span class="trend-tag">🧅 Onion <span class="t-arr">▲ 5.7%</span></span>
+      <span class="trend-tag">🌹 Cotton <span class="t-arr">▲ 3.4%</span></span>
+      <span class="trend-tag">🌾 Wheat <span class="t-arr">▲ 2.1%</span></span>
+      <span class="trend-tag">🍅 Tomato <span class="t-arr">▲ 1.8%</span></span>
+    </div>
+  </div>
+
+  <!-- Seasonal recommendation -->
+  <div class="mp-season reveal">
+    <div class="mp-season-badge">🌦 Kharif Season</div>
+    <p>Recommended crops for this season based on your region and soil type:</p>
+    <div class="mp-season-crops">
+      <span class="mp-season-crop">🍚 Rice</span>
+      <span class="mp-season-crop">🌽 Maize</span>
+      <span class="mp-season-crop">🫘 Soybean</span>
+      <span class="mp-season-crop">🍅 Tomato</span>
+    </div>
+  </div>
+
+  <!-- Crop Cards Grid -->
+  <div class="mp-grid reveal" id="mpGrid">
+    <!-- Tomatoes -->
+    <div class="crop-card" data-cat="veg" data-price="42" data-fresh="1" data-pop="95">
+      <div class="cc-img veg">🍅<span class="cc-badge organic">🌿 Organic</span></div>
+      <div class="cc-body">
+        <div class="cc-name">Tomatoes</div>
+        <div class="cc-price">₹42<small>/kg · ₹4,200/q</small></div>
+        <div class="cc-meta">
+          <span>📦 850 kg available</span>
+          <span>📍 Nashik, Maharashtra</span>
+        </div>
+      </div>
+      <div class="cc-actions">
+        <button class="cc-buy" onclick="alert('🛒 Added to cart — Tomatoes from Nashik')">Buy Now</button>
+        <button class="cc-view">View Details</button>
+      </div>
+    </div>
+    <!-- Onions -->
+    <div class="crop-card" data-cat="veg" data-price="28" data-fresh="2" data-pop="98">
+      <div class="cc-img veg">🧅<span class="cc-badge non-organic">Non-Organic</span></div>
+      <div class="cc-body">
+        <div class="cc-name">Onions</div>
+        <div class="cc-price">₹28<small>/kg · ₹2,800/q</small></div>
+        <div class="cc-meta">
+          <span>📦 2,400 kg available</span>
+          <span>📍 Lasalgaon, Maharashtra</span>
+        </div>
+      </div>
+      <div class="cc-actions">
+        <button class="cc-buy" onclick="alert('🛒 Added to cart — Onions from Lasalgaon')">Buy Now</button>
+        <button class="cc-view">View Details</button>
+      </div>
+    </div>
+    <!-- Potatoes -->
+    <div class="crop-card" data-cat="veg" data-price="22" data-fresh="3" data-pop="88">
+      <div class="cc-img veg">🥔<span class="cc-badge organic">🌿 Organic</span></div>
+      <div class="cc-body">
+        <div class="cc-name">Potatoes</div>
+        <div class="cc-price">₹22<small>/kg · ₹2,200/q</small></div>
+        <div class="cc-meta">
+          <span>📦 5,000 kg available</span>
+          <span>📍 Agra, Uttar Pradesh</span>
+        </div>
+      </div>
+      <div class="cc-actions">
+        <button class="cc-buy" onclick="alert('🛒 Added to cart — Potatoes from Agra')">Buy Now</button>
+        <button class="cc-view">View Details</button>
+      </div>
+    </div>
+    <!-- Wheat -->
+    <div class="crop-card" data-cat="grain" data-price="24" data-fresh="5" data-pop="92">
+      <div class="cc-img grain">🌾<span class="cc-badge non-organic">Non-Organic</span></div>
+      <div class="cc-body">
+        <div class="cc-name">Wheat</div>
+        <div class="cc-price">₹24<small>/kg · ₹2,400/q</small></div>
+        <div class="cc-meta">
+          <span>📦 12,000 kg available</span>
+          <span>📍 Indore, Madhya Pradesh</span>
+        </div>
+      </div>
+      <div class="cc-actions">
+        <button class="cc-buy" onclick="alert('🛒 Added to cart — Wheat from Indore')">Buy Now</button>
+        <button class="cc-view">View Details</button>
+      </div>
+    </div>
+    <!-- Rice -->
+    <div class="crop-card" data-cat="grain" data-price="38" data-fresh="4" data-pop="90">
+      <div class="cc-img grain">🍚<span class="cc-badge organic">🌿 Organic</span></div>
+      <div class="cc-body">
+        <div class="cc-name">Rice (Basmati)</div>
+        <div class="cc-price">₹38<small>/kg · ₹3,800/q</small></div>
+        <div class="cc-meta">
+          <span>📦 8,500 kg available</span>
+          <span>📍 Karnal, Haryana</span>
+        </div>
+      </div>
+      <div class="cc-actions">
+        <button class="cc-buy" onclick="alert('🛒 Added to cart — Rice from Karnal')">Buy Now</button>
+        <button class="cc-view">View Details</button>
+      </div>
+    </div>
+    <!-- Sugarcane -->
+    <div class="crop-card" data-cat="cash" data-price="3.5" data-fresh="6" data-pop="75">
+      <div class="cc-img grain">🎋<span class="cc-badge non-organic">Non-Organic</span></div>
+      <div class="cc-body">
+        <div class="cc-name">Sugarcane</div>
+        <div class="cc-price">₹350<small>/q · ₹3.5/kg</small></div>
+        <div class="cc-meta">
+          <span>📦 50,000 kg available</span>
+          <span>📍 Kolhapur, Maharashtra</span>
+        </div>
+      </div>
+      <div class="cc-actions">
+        <button class="cc-buy" onclick="alert('🛒 Added to cart — Sugarcane from Kolhapur')">Buy Now</button>
+        <button class="cc-view">View Details</button>
+      </div>
+    </div>
+    <!-- Corn / Maize -->
+    <div class="crop-card" data-cat="grain" data-price="19" data-fresh="3" data-pop="80">
+      <div class="cc-img grain">🌽<span class="cc-badge organic">🌿 Organic</span></div>
+      <div class="cc-body">
+        <div class="cc-name">Corn / Maize</div>
+        <div class="cc-price">₹19<small>/kg · ₹1,900/q</small></div>
+        <div class="cc-meta">
+          <span>📦 6,200 kg available</span>
+          <span>📍 Davangere, Karnataka</span>
+        </div>
+      </div>
+      <div class="cc-actions">
+        <button class="cc-buy" onclick="alert('🛒 Added to cart — Maize from Davangere')">Buy Now</button>
+        <button class="cc-view">View Details</button>
+      </div>
+    </div>
+    <!-- Fruits & Seasonal Vegetables -->
+    <div class="crop-card" data-cat="fruit seasonal" data-price="65" data-fresh="1" data-pop="85">
+      <div class="cc-img fruit">🥭<span class="cc-badge organic">🌿 Organic</span></div>
+      <div class="cc-body">
+        <div class="cc-name">Seasonal Fruits & Veg</div>
+        <div class="cc-price">₹65<small>/kg · Mixed Box</small></div>
+        <div class="cc-meta">
+          <span>📦 1,200 kg available</span>
+          <span>📍 Ratnagiri, Maharashtra</span>
+        </div>
+      </div>
+      <div class="cc-actions">
+        <button class="cc-buy" onclick="alert('🛒 Added to cart — Seasonal mix from Ratnagiri')">Buy Now</button>
+        <button class="cc-view">View Details</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     MARKET ACCESS
+══════════════════════════════════════ -->
+<section id="market" class="content-sec">
+  <div class="sec-eyebrow">Direct Market Access</div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px">
+    <div>
+      <h2 class="sec-h">SELL DIRECT,<br><em>NO MIDDLEMEN</em></h2>
+      <p class="sec-sub">Connect straight to mandis, bulk buyers and exporters — you set the price and pocket the full margin.</p>
+    </div>
+    <button class="btn btn-gold" style="flex-shrink:0" onclick="alert('Listing portal opening soon!')">+ List Your Produce</button>
+  </div>
+
+  <div class="market-layout reveal">
+
+    <div class="mkt-services">
+      <div class="mkt-card" onclick="this.style.transform='translateX(10px)'">
+        <div class="mkt-icon green">🏪</div>
+        <div class="mkt-body">
+          <h4>APMC Mandi Connect</h4>
+          <p>Live rates from 200+ APMCs across your state. Compare mandis, choose the highest bidder, and transport with one tap.</p>
+          <span class="mkt-tag">📍 16 mandis near Pune</span>
+        </div>
+      </div>
+      <div class="mkt-card">
+        <div class="mkt-icon gold">🤝</div>
+        <div class="mkt-body">
+          <h4>AI Buyer Matchmaking</h4>
+          <p>Our AI matches your crop variety, quantity and quality grade with verified bulk buyers, agri-processors and export houses.</p>
+          <span class="mkt-tag alert">✅ 42 active buyers found</span>
+        </div>
+      </div>
+      <div class="mkt-card">
+        <div class="mkt-icon terra">🚚</div>
+        <div class="mkt-body">
+          <h4>Cold Storage & Logistics</h4>
+          <p>Book partner cold-chains and trucks at subsidised rates. Track shipment live and get GST-compliant e-bills automatically.</p>
+          <span class="mkt-tag">🌡 3 cold stores nearby</span>
+        </div>
+      </div>
+      <div class="mkt-card">
+        <div class="mkt-icon sky">💳</div>
+        <div class="mkt-body">
+          <h4>Advance Payment & Loans</h4>
+          <p>Get 80 % of invoice value upfront once a buyer confirms. Kisan credit facility up to ₹5 lakh for certified produce growers.</p>
+          <span class="mkt-tag alert">💰 KCC limit: ₹5 Lakh</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mkt-sidebar">
+      <!-- live prices -->
+      <div class="price-board">
+        <div class="price-board-h">📈 Live Mandi Rates <span class="p-live">Live</span></div>
+        <div class="pr"><div class="pr-crop"><span class="pr-crop-icon">🌾</span>Wheat</div>   <div class="pr-val">₹2,240<small>/q</small> <span class="pr-chg chg-up">▲2.1%</span></div></div>
+        <div class="pr"><div class="pr-crop"><span class="pr-crop-icon">🍚</span>Paddy</div>   <div class="pr-val">₹2,183<small>/q</small> <span class="pr-chg chg-dn">▼0.3%</span></div></div>
+        <div class="pr"><div class="pr-crop"><span class="pr-crop-icon">🌽</span>Maize</div>   <div class="pr-val">₹1,890<small>/q</small> <span class="pr-chg chg-dn">▼0.8%</span></div></div>
+        <div class="pr"><div class="pr-crop"><span class="pr-crop-icon">🌹</span>Cotton</div>  <div class="pr-val">₹6,750<small>/q</small> <span class="pr-chg chg-up">▲3.4%</span></div></div>
+        <div class="pr"><div class="pr-crop"><span class="pr-crop-icon">🫘</span>Soybean</div> <div class="pr-val">₹4,320<small>/q</small> <span class="pr-chg chg-up">▲1.2%</span></div></div>
+        <div class="pr"><div class="pr-crop"><span class="pr-crop-icon">🧅</span>Onion</div>   <div class="pr-val">₹1,450<small>/q</small> <span class="pr-chg chg-up">▲5.7%</span></div></div>
+      </div>
+
+      <!-- buyer filter -->
+      <div class="mkt-filter-box">
+        <h4>🔍 Find Buyers by Crop</h4>
+        <div class="filter-chips">
+          <button class="fchip on"  onclick="chipClick(this)">All</button>
+          <button class="fchip"     onclick="chipClick(this)">Grains</button>
+          <button class="fchip"     onclick="chipClick(this)">Vegetables</button>
+          <button class="fchip"     onclick="chipClick(this)">Fruits</button>
+          <button class="fchip"     onclick="chipClick(this)">Oilseeds</button>
+        </div>
+        <input class="market-inp" type="text" placeholder="Search crop or buyer…"/>
+        <button class="list-btn">📦 List My Produce Now</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PESTICIDES & FERTILIZERS
+══════════════════════════════════════ -->
+<section id="pesticides" class="content-sec">
+  <div class="pf-top">
+    <div>
+      <div class="sec-eyebrow">Crop Care Guide</div>
+      <h2 class="sec-h">PESTICIDES &amp;<br><em>FERTILIZERS</em></h2>
+      <p class="sec-sub">Select your crop to get a personalised, season-wise protection and nutrition plan.</p>
+    </div>
+    <div class="crop-tabs" id="cropTabs">
+      <button class="ctab on" onclick="setCrop(this,'wheat')"   ><div class="ti">🌾</div>Wheat</button>
+      <button class="ctab"    onclick="setCrop(this,'rice')"    ><div class="ti">🍚</div>Rice</button>
+      <button class="ctab"    onclick="setCrop(this,'cotton')"  ><div class="ti">🌹</div>Cotton</button>
+      <button class="ctab"    onclick="setCrop(this,'soybean')" ><div class="ti">🫘</div>Soybean</button>
+      <button class="ctab"    onclick="setCrop(this,'tomato')"  ><div class="ti">🍅</div>Tomato</button>
+    </div>
+  </div>
+  <div class="pf-grid reveal" id="pfGrid"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     LIVE MANDI RATES
+══════════════════════════════════════ -->
+<section id="mandi" class="content-sec">
+  <div class="sec-eyebrow">Live Mandi Rates</div>
+  <h2 class="sec-h">REAL-TIME <br><em>MARKET PRICES</em></h2>
+  <p class="sec-sub">Compare mandi prices across states and cities to decide where and when to sell for maximum profit.</p>
+
+  <!-- KPI Cards -->
+  <div class="mandi-kpis reveal">
+    <div class="mk">
+      <div class="mk-ico">📈</div>
+      <div class="mk-val" style="color:var(--sage)">Onion</div>
+      <div class="mk-lbl">Today's Highest Gainer (+5.7%)</div>
+    </div>
+    <div class="mk">
+      <div class="mk-ico">🔥</div>
+      <div class="mk-val" style="color:var(--wheat)">Wheat</div>
+      <div class="mk-lbl">Most Traded Commodity</div>
+    </div>
+    <div class="mk">
+      <div class="mk-ico">🔔</div>
+      <div class="mk-val" style="color:var(--clay)">12</div>
+      <div class="mk-lbl">Active Price Alerts</div>
+    </div>
+    <div class="mk">
+      <div class="mk-ico">🏪</div>
+      <div class="mk-val" style="color:var(--rain)">247</div>
+      <div class="mk-lbl">Mandis Tracked Live</div>
+    </div>
+  </div>
+
+  <!-- Table + Chart -->
+  <div class="mandi-layout reveal">
+    <div class="mandi-table-wrap">
+      <h3>📊 Live Price Board</h3>
+      <div class="mandi-ts"><span class="live-dot"></span> Last updated: <span id="mandiTs"></span> IST · Auto-refreshes every 15 min</div>
+      <table class="mandi-tbl">
+        <thead><tr><th>Commodity</th><th>State / City</th><th>Min ₹/q</th><th>Max ₹/q</th><th>Avg ₹/q</th><th>Trend</th></tr></thead>
+        <tbody>
+          <tr><td>🌾 Wheat</td><td>MP · Indore</td><td>2,180</td><td>2,320</td><td>2,240</td><td class="m-trend up">▲ 2.1%</td></tr>
+          <tr><td>🍚 Rice</td><td>Haryana · Karnal</td><td>2,050</td><td>2,280</td><td>2,183</td><td class="m-trend dn">▼ 0.3%</td></tr>
+          <tr><td>🧅 Onion</td><td>MH · Lasalgaon</td><td>1,200</td><td>1,680</td><td>1,450</td><td class="m-trend up">▲ 5.7%</td></tr>
+          <tr><td>🌽 Maize</td><td>KA · Davangere</td><td>1,750</td><td>2,020</td><td>1,890</td><td class="m-trend dn">▼ 0.8%</td></tr>
+          <tr><td>🍅 Tomato</td><td>MH · Nashik</td><td>3,500</td><td>4,800</td><td>4,200</td><td class="m-trend up">▲ 1.8%</td></tr>
+          <tr><td>🌹 Cotton</td><td>GJ · Rajkot</td><td>6,400</td><td>7,100</td><td>6,750</td><td class="m-trend up">▲ 3.4%</td></tr>
+          <tr><td>🫘 Soybean</td><td>MP · Ujjain</td><td>4,100</td><td>4,550</td><td>4,320</td><td class="m-trend up">▲ 1.2%</td></tr>
+          <tr><td>🥔 Potato</td><td>UP · Agra</td><td>1,800</td><td>2,400</td><td>2,200</td><td class="m-trend dn">▼ 0.5%</td></tr>
+          <tr><td>🎋 Sugarcane</td><td>MH · Kolhapur</td><td>310</td><td>385</td><td>350</td><td class="m-trend up">▲ 0.9%</td></tr>
+          <tr><td>🥭 Mango</td><td>MH · Ratnagiri</td><td>5,500</td><td>8,200</td><td>6,800</td><td class="m-trend up">▲ 4.2%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mandi-chart-wrap">
+      <h3>📉 7-Day Price Trends (₹/quintal)</h3>
+      <svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <!-- Grid lines -->
+        <line x1="0" y1="40" x2="320" y2="40" stroke="rgba(0,0,0,.06)" stroke-dasharray="4"/>
+        <line x1="0" y1="80" x2="320" y2="80" stroke="rgba(0,0,0,.06)" stroke-dasharray="4"/>
+        <line x1="0" y1="120" x2="320" y2="120" stroke="rgba(0,0,0,.06)" stroke-dasharray="4"/>
+        <line x1="0" y1="160" x2="320" y2="160" stroke="rgba(0,0,0,.06)" stroke-dasharray="4"/>
+        <!-- Wheat -->
+        <polyline points="0,100 53,95 106,98 160,88 213,82 266,78 320,72" stroke="#d4920a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Rice -->
+        <polyline points="0,110 53,108 106,112 160,115 213,113 266,112 320,114" stroke="#3b6e8f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Onion -->
+        <polyline points="0,150 53,142 106,135 160,128 213,118 266,108 320,95" stroke="#6aab5e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Cotton -->
+        <polyline points="0,60 53,58 106,55 160,50 213,45 266,42 320,35" stroke="#c0562a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Legend -->
+        <circle cx="10" cy="185" r="4" fill="#d4920a"/><text x="18" y="188" font-size="9" fill="#7a6e5f" font-family="DM Sans">Wheat</text>
+        <circle cx="70" cy="185" r="4" fill="#3b6e8f"/><text x="78" y="188" font-size="9" fill="#7a6e5f" font-family="DM Sans">Rice</text>
+        <circle cx="120" cy="185" r="4" fill="#6aab5e"/><text x="128" y="188" font-size="9" fill="#7a6e5f" font-family="DM Sans">Onion</text>
+        <circle cx="178" cy="185" r="4" fill="#c0562a"/><text x="186" y="188" font-size="9" fill="#7a6e5f" font-family="DM Sans">Cotton</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Map + Insights -->
+  <div class="mandi-bottom reveal">
+    <div class="mandi-map-wrap">
+      <h3>🗺 Regional Price Heatmap</h3>
+      <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <!-- Simplified India regions -->
+        <path d="M80,20 Q100,10 120,20 L130,50 Q135,60 125,65 L120,60 Z" fill="#6aab5e" opacity=".7" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+        <text x="95" y="42" font-size="7" fill="#fff" font-family="DM Sans" text-anchor="middle">North</text>
+        <path d="M50,60 L80,50 L90,70 Q85,90 70,95 L45,85 Z" fill="#d4920a" opacity=".7" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+        <text x="68" y="78" font-size="7" fill="#fff" font-family="DM Sans" text-anchor="middle">West</text>
+        <path d="M90,55 L125,65 Q130,80 120,95 L95,90 Q85,80 90,70 Z" fill="#f0b429" opacity=".5" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+        <text x="107" y="78" font-size="7" fill="#fff" font-family="DM Sans" text-anchor="middle">Central</text>
+        <path d="M125,65 L150,55 Q160,70 155,90 L130,95 Q130,80 125,65 Z" fill="#5a8fa8" opacity=".6" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+        <text x="142" y="78" font-size="7" fill="#fff" font-family="DM Sans" text-anchor="middle">East</text>
+        <path d="M70,95 L120,95 Q130,115 115,140 Q100,160 85,155 Q65,140 60,120 Z" fill="#c0562a" opacity=".6" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+        <text x="95" y="125" font-size="7" fill="#fff" font-family="DM Sans" text-anchor="middle">South</text>
+      </svg>
+      <div class="map-legend">
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#6aab5e"></div> High Prices</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#d4920a"></div> Medium-High</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#f0b429"></div> Moderate</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#5a8fa8"></div> Medium-Low</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#c0562a"></div> Variable</div>
+      </div>
+    </div>
+
+    <div class="mandi-insights">
+      <div class="mi-card">
+        <h4>🏆 Top Profitable Crops</h4>
+        <ul class="mi-list">
+          <li>Cotton (Rajkot) <span class="mi-val">₹6,750/q</span></li>
+          <li>Mango (Ratnagiri) <span class="mi-val">₹6,800/q</span></li>
+          <li>Soybean (Ujjain) <span class="mi-val">₹4,320/q</span></li>
+          <li>Tomato (Nashik) <span class="mi-val">₹4,200/q</span></li>
+        </ul>
+      </div>
+      <div class="mi-card">
+        <h4>📊 Best Selling States</h4>
+        <ul class="mi-list">
+          <li>Maharashtra <span class="mi-val">34% volume</span></li>
+          <li>Madhya Pradesh <span class="mi-val">22% volume</span></li>
+          <li>Gujarat <span class="mi-val">18% volume</span></li>
+          <li>Uttar Pradesh <span class="mi-val">14% volume</span></li>
+        </ul>
+      </div>
+      <div class="mi-card">
+        <h4>🔮 Price Forecast</h4>
+        <ul class="mi-list">
+          <li>Onion — Expected <span class="mi-val" style="color:var(--sage)">▲ Rise</span></li>
+          <li>Wheat — Expected <span class="mi-val" style="color:var(--sage)">▲ Stable</span></li>
+          <li>Potato — Expected <span class="mi-val" style="color:#e84545">▼ Drop</span></li>
+          <li>Cotton — Expected <span class="mi-val" style="color:var(--sage)">▲ Rise</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature callout -->
+  <div class="mandi-callout reveal">
+    <div class="mandi-callout-ico">💡</div>
+    <p><strong>Compare mandi prices across regions</strong> to decide where and when to sell for maximum profit. KrishiSeva aggregates data from 247+ APMC mandis in real-time, helping farmers make data-driven decisions and earn 15–30% more on every harvest.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     DASHBOARD
+══════════════════════════════════════ -->
+<section id="dashboard" class="content-sec">
+  <div class="sec-eyebrow">Farmer Dashboard</div>
+  <h2 class="sec-h">YOUR FARM,<br><em>AT A GLANCE</em></h2>
+  <p class="sec-sub">Profile, analytics, crop health, live alerts and daily tasks — your complete farm command centre.</p>
+
+  <!-- Profile Summary -->
+  <div class="dash-profile reveal">
+    <div class="dp-avatar">👨‍🌾</div>
+    <div class="dp-info">
+      <h3>Rajesh Kumar Patil</h3>
+      <p>📍 Pune, Maharashtra · Member since 2023 · ⭐ 4.8 Rating</p>
+    </div>
+    <div class="dp-badges">
+      <span class="dp-badge">🌿 Organic Certified</span>
+      <span class="dp-badge" style="background:rgba(212,146,10,.12);color:var(--wheat)">🏆 Top Seller</span>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="dash-kpis reveal">
+    <div class="dk">
+      <div class="dk-ico">💰</div>
+      <div class="dk-val" style="color:var(--sage)">₹2.4L</div>
+      <div class="dk-lbl">Total Earnings</div>
+    </div>
+    <div class="dk">
+      <div class="dk-ico">📦</div>
+      <div class="dk-val" style="color:var(--wheat)">7</div>
+      <div class="dk-lbl">Active Listings</div>
+    </div>
+    <div class="dk">
+      <div class="dk-ico">🛒</div>
+      <div class="dk-val" style="color:var(--rain)">14</div>
+      <div class="dk-lbl">Orders Received</div>
+    </div>
+    <div class="dk">
+      <div class="dk-ico">🚚</div>
+      <div class="dk-val" style="color:var(--clay)">3</div>
+      <div class="dk-lbl">Pending Deliveries</div>
+    </div>
+    <div class="dk">
+      <div class="dk-ico">💳</div>
+      <div class="dk-val" style="color:var(--sage)">₹42K</div>
+      <div class="dk-lbl">Wallet Balance</div>
+    </div>
+    <div class="dk">
+      <div class="dk-ico">🔔</div>
+      <div class="dk-val" style="color:var(--clay)">5</div>
+      <div class="dk-lbl">Notifications</div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="dash-quick reveal">
+    <button class="dq-btn" onclick="alert('📤 Opening produce upload form…')"><span class="dq-ico">📤</span> Upload Produce</button>
+    <button class="dq-btn" onclick="document.getElementById('mandi').scrollIntoView({behavior:'smooth'})"><span class="dq-ico">📊</span> Check Mandi Rates</button>
+    <button class="dq-btn" onclick="alert('🔬 Opening AI crop scanner…')"><span class="dq-ico">🔬</span> Scan Crop Disease</button>
+    <button class="dq-btn" onclick="alert('📋 Loading your orders…')"><span class="dq-ico">📋</span> View Orders</button>
+    <button class="dq-btn" onclick="alert('📞 Connecting to buyers…')"><span class="dq-ico">📞</span> Contact Buyers</button>
+  </div>
+
+  <div class="dash-grid">
+
+    <!-- weather -->
+    <div class="dc weather reveal">
+      <div class="wx-top">📍 Pune, Maharashtra — Live Weather</div>
+      <div class="wx-main">
+        <div class="wx-ico">⛅</div>
+        <div>
+          <div class="wx-temp" id="wxTemp">28°C</div>
+          <div class="wx-cond">Partly Cloudy — Good for spraying</div>
+        </div>
+      </div>
+      <div class="wx-details">
+        <div class="wx-d">Humidity <strong id="wxHum">68%</strong></div>
+        <div class="wx-d">Wind     <strong>12 km/h NW</strong></div>
+        <div class="wx-d">7-day Rain<strong>14 mm</strong></div>
+        <div class="wx-d">UV Index <strong>High (7)</strong></div>
+      </div>
+    </div>
+
+    <!-- metrics -->
+    <div class="dc reveal">
+      <div class="dc-ico">🌱</div>
+      <div class="dc-val" style="color:var(--sage)">4.2 ac</div>
+      <div class="dc-lbl">Active Crop Area</div>
+      <div class="dc-chg up">▲ 0.5 ac from last season</div>
+    </div>
+    <div class="dc reveal">
+      <div class="dc-ico">💰</div>
+      <div class="dc-val" style="color:var(--wheat)">₹84K</div>
+      <div class="dc-lbl">Expected Revenue</div>
+      <div class="dc-chg up">▲ 12 % vs last year</div>
+    </div>
+
+    <!-- crop health -->
+    <div class="dc span2 reveal">
+      <h3>🌿 Crop Health Score</h3>
+      <div class="sub">AI scan — 2 days ago</div>
+      <div class="health-wrap">
+        <div class="h-row">
+          <div class="h-lbl">Wheat</div>
+          <div class="h-track"><div class="h-fill" style="width:82%;background:linear-gradient(90deg,#6aab5e,#4a7c3f)"></div></div>
+          <div class="h-num" style="color:var(--sage)">82%</div>
+        </div>
+        <div class="h-row">
+          <div class="h-lbl">Tomato</div>
+          <div class="h-track"><div class="h-fill" style="width:64%;background:linear-gradient(90deg,#f0b429,#d4920a)"></div></div>
+          <div class="h-num" style="color:var(--wheat)">64%</div>
+        </div>
+        <div class="h-row">
+          <div class="h-lbl">Onion</div>
+          <div class="h-track"><div class="h-fill" style="width:91%;background:linear-gradient(90deg,#6aab5e,#4a7c3f)"></div></div>
+          <div class="h-num" style="color:var(--sage)">91%</div>
+        </div>
+        <div class="h-row">
+          <div class="h-lbl">Soybean</div>
+          <div class="h-track"><div class="h-fill" style="width:43%;background:linear-gradient(90deg,#e84545,#c0562a)"></div></div>
+          <div class="h-num" style="color:#e84545">43%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- alerts -->
+    <div class="dc span2 reveal">
+      <h3>🔔 Farm Alerts</h3>
+      <div class="sub">3 items need attention</div>
+      <div class="alerts-list">
+        <div class="a-item">
+          <div class="a-dot hi"></div>
+          <div class="a-txt">
+            <strong>Soybean Rust Detected</strong>
+            Immediate fungicide application recommended on field B3. Risk: High.
+            <div class="a-time">🕐 2 hours ago</div>
+          </div>
+        </div>
+        <div class="a-item">
+          <div class="a-dot md"></div>
+          <div class="a-txt">
+            <strong>Irrigation Due</strong>
+            Wheat field A1 soil moisture at 28 %. Schedule watering within 24 hrs.
+            <div class="a-time">🕐 5 hours ago</div>
+          </div>
+        </div>
+        <div class="a-item">
+          <div class="a-dot lo"></div>
+          <div class="a-txt">
+            <strong>Price Opportunity</strong>
+            Onion prices up 5.7 % today — good window to sell surplus stock.
+            <div class="a-time">🕐 Yesterday</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- tasks -->
+    <div class="dc span2 reveal">
+      <h3>✅ Today's Tasks</h3>
+      <div class="sub">4 of 6 completed</div>
+      <div class="tasks-list" id="taskList">
+        <div class="t-item"><div class="t-cb done" onclick="toggleTask(this)">✓</div><div class="t-txt done">Morning irrigation — Field A1</div><div class="t-when">Done</div></div>
+        <div class="t-item"><div class="t-cb done" onclick="toggleTask(this)">✓</div><div class="t-txt done">Apply urea — Wheat plot</div><div class="t-when">Done</div></div>
+        <div class="t-item"><div class="t-cb"      onclick="toggleTask(this)"> </div><div class="t-txt">Spray fungicide — Soybean B3</div><div class="t-when urgent">⚠ Urgent</div></div>
+        <div class="t-item"><div class="t-cb"      onclick="toggleTask(this)"> </div><div class="t-txt">Soil test — Tomato field C2</div><div class="t-when">Today 4 PM</div></div>
+        <div class="t-item"><div class="t-cb done" onclick="toggleTask(this)">✓</div><div class="t-txt done">Submit onion listing — Market</div><div class="t-when">Done</div></div>
+        <div class="t-item"><div class="t-cb done" onclick="toggleTask(this)">✓</div><div class="t-txt done">Irrigation system check</div><div class="t-when">Done</div></div>
+      </div>
+    </div>
+
+    <!-- earnings chart -->
+    <div class="dc span2 reveal">
+      <h3>📊 Monthly Earnings</h3>
+      <div class="sub">Last 6 months — ₹ (thousands)</div>
+      <div class="chart-wrap">
+        <svg viewBox="0 0 420 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#6aab5e" stop-opacity=".35"/>
+              <stop offset="100%" stop-color="#6aab5e" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,68 L70,52 L140,58 L210,35 L280,22 L350,38 L420,14"
+                stroke="#4a7c3f" stroke-width="2.5" fill="none"
+                stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M0,68 L70,52 L140,58 L210,35 L280,22 L350,38 L420,14 L420,90 L0,90 Z"
+                fill="url(#cg)"/>
+          <circle cx="70"  cy="52" r="3.5" fill="#4a7c3f"/>
+          <circle cx="140" cy="58" r="3.5" fill="#4a7c3f"/>
+          <circle cx="210" cy="35" r="3.5" fill="#4a7c3f"/>
+          <circle cx="280" cy="22" r="3.5" fill="#4a7c3f"/>
+          <circle cx="350" cy="38" r="3.5" fill="#d4920a"/>
+          <circle cx="420" cy="14" r="5.5" fill="#d4920a" stroke="#fff" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="chart-month-labels">
+        <span>Oct</span><span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span>
+      </div>
+    </div>
+
+    <!-- summary bar -->
+    <div class="dc sum-row reveal">
+      <div class="sum-stat"><div class="sum-stat-n">18,420</div><div class="sum-stat-l">Total Farmers</div></div>
+      <div class="sum-stat"><div class="sum-stat-n">₹3.2 Cr</div><div class="sum-stat-l">Collective Savings</div></div>
+      <div class="sum-stat"><div class="sum-stat-n">97.4%</div><div class="sum-stat-l">Disease Detection Rate</div></div>
+      <div class="sum-stat"><div class="sum-stat-n">200+</div><div class="sum-stat-l">APMC Mandis Covered</div></div>
+      <div class="sum-stat"><div class="sum-stat-n">1800</div><div class="sum-stat-l">Toll-Free Helpline</div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     INNOVATION SHOWCASE
+══════════════════════════════════════ -->
+<section id="innovation">
+  <div class="sec-eyebrow" style="color:var(--sun)">Innovation & Technology</div>
+  <h2 class="sec-h" style="color:var(--dust)">BUILDING THE <br><em>FUTURE OF FARMING</em></h2>
+  <p class="sec-sub" style="color:rgba(245,237,214,.6)">Cutting-edge technology designed to empower India's farmers with AI, analytics, and seamless digital tools.</p>
+
+  <div class="inno-grid">
+    <div class="inno-card reveal">
+      <div class="inno-ico">🔬</div>
+      <h4>AI Crop Disease Detection</h4>
+      <p>Upload a photo and get instant AI-powered diagnosis with treatment recommendations. 97.4% accuracy across 50+ diseases.</p>
+      <span class="inno-status live">● Live</span>
+    </div>
+    <div class="inno-card reveal">
+      <div class="inno-ico">🧠</div>
+      <h4>Smart Recommendation Engine</h4>
+      <p>Personalised crop, fertilizer, and market recommendations based on soil type, weather, and historical yield data.</p>
+      <span class="inno-status live">● Live</span>
+    </div>
+    <div class="inno-card reveal">
+      <div class="inno-ico">🚚</div>
+      <h4>Delivery Tracking</h4>
+      <p>Real-time GPS tracking for produce shipments from farm to buyer. Automated dispatch and ETA notifications.</p>
+      <span class="inno-status soon">◐ Coming Soon</span>
+    </div>
+    <div class="inno-card reveal">
+      <div class="inno-ico">💳</div>
+      <h4>Digital Payment Integration</h4>
+      <p>UPI, bank transfer, and wallet payments built in. Instant settlements with automated GST invoicing.</p>
+      <span class="inno-status soon">◐ Coming Soon</span>
+    </div>
+    <div class="inno-card reveal">
+      <div class="inno-ico">🤝</div>
+      <h4>Farmer-to-Consumer Connect</h4>
+      <p>Direct marketplace eliminating middlemen. Farmers set their own prices and connect directly with buyers.</p>
+      <span class="inno-status live">● Live</span>
+    </div>
+    <div class="inno-card reveal">
+      <div class="inno-ico">📱</div>
+      <h4>QR-Code Product Traceability</h4>
+      <p>Every produce batch gets a unique QR code. Consumers can trace origin, farming method, and freshness score.</p>
+      <span class="inno-status soon">◐ Coming Soon</span>
+    </div>
+    <div class="inno-card reveal">
+      <div class="inno-ico">🌐</div>
+      <h4>Multi-Language Support</h4>
+      <p>Full interface in Hindi, Marathi, Telugu, Tamil, Kannada, Bengali, and Gujarati — reaching every farmer.</p>
+      <span class="inno-status soon">◐ Coming Soon</span>
+    </div>
+    <div class="inno-card reveal">
+      <div class="inno-ico">🎙️</div>
+      <h4>Voice Assistant for Farmers</h4>
+      <p>Speak naturally in your language. The AI assistant helps navigate the app, check prices, and manage tasks hands-free.</p>
+      <span class="inno-status soon">◐ Coming Soon</span>
+    </div>
+    <div class="inno-card reveal">
+      <div class="inno-ico">🌿</div>
+      <h4>Sustainability & Eco Branding</h4>
+      <p>Carbon footprint tracking, organic certification assistance, and eco-labelling to boost farm produce value.</p>
+      <span class="inno-status live">● Live</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer>
+  <div class="ft-grid">
+    <div class="ft-brand">
+      <h2>🌾 Krishi<span>Seva</span></h2>
+      <p>Empowering India's 140 million farmers with AI, market access, and real-time crop intelligence — one field at a time.</p>
+    </div>
+    <div class="ft-col">
+      <h4>Platform</h4>
+      <a href="#home">AI Crop Doctor</a>
+      <a href="#marketplace">Marketplace</a>
+      <a href="#mandi">Mandi Rates</a>
+      <a href="#market">Market Access</a>
+      <a href="#pesticides">Crop Care</a>
+      <a href="#dashboard">Dashboard</a>
+    </div>
+    <div class="ft-col">
+      <h4>Innovation</h4>
+      <a href="#innovation">AI Disease Detection</a>
+      <a href="#innovation">QR Traceability</a>
+      <a href="#innovation">Voice Assistant</a>
+      <a href="#innovation">Digital Payments</a>
+    </div>
+    <div class="ft-col">
+      <h4>Support</h4>
+      <a href="#">Help Centre</a>
+      <a href="#">WhatsApp Bot</a>
+      <a href="#">Field Agent Network</a>
+      <a href="#">Training Videos</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <p>© 2025 KrishiSeva. Made with 💚 for Bharat's Farmers.</p>
+    <div class="helpline">📞 1800-180-1551 Toll Free</div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+/* ── Active nav on scroll ── */
+window.addEventListener('scroll',()=>{
+  const ids=['home','marketplace','mandi','market','pesticides','dashboard','innovation'];
+  let cur='home';
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&window.scrollY>=el.offsetTop-100)cur=id;
+  });
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.classList.toggle('active',a.getAttribute('href')==='#'+cur);
+  });
+});
+
+/* ── Intersection reveal ── */
+const revObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+
+/* ── Filter chips ── */
+function chipClick(el){
+  document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+}
+
+/* ── Tasks ── */
+function toggleTask(cb){
+  cb.classList.toggle('done');
+  const txt=cb.nextElementSibling;
+  txt.classList.toggle('done');
+  cb.textContent=cb.classList.contains('done')?'✓':' ';
+}
+
+/* ── Weather live flicker ── */
+setInterval(()=>{
+  const v=(28+((Math.random()-.5)*1.5)).toFixed(1);
+  document.getElementById('wxTemp').textContent=v+'°C';
+  document.getElementById('wxHum').textContent=Math.round(66+Math.random()*6)+'%';
+},9000);
+
+/* ══════════════════════════════════════
+   CROP DATA — Pesticides & Fertilizers
+══════════════════════════════════════ */
+const CROPS={
+  wheat:{
+    pest:[
+      {name:'Propiconazole 25% EC',desc:'Controls rust & powdery mildew. Apply 0.1% at flag-leaf stage.',b:'warn',bl:'Moderate Risk'},
+      {name:'Mancozeb 75% WP',    desc:'Broad-spectrum for leaf blight. 2 g/L every 10–12 days.',    b:'ok',  bl:'Low Risk'},
+      {name:'Chlorpyrifos 20% EC',desc:'Aphid & termite control. 2.5 mL/L, 400–600 L/ha.',           b:'bad', bl:'Handle with Care'},
+    ],
+    fert:[
+      {name:'Urea (46 % N)',      desc:'Basal 100 kg/ha. Top-dress 30 kg/ha at tillering.',            b:'ok',  bl:'Recommended'},
+      {name:'DAP (18-46-0)',      desc:'100 kg/ha at sowing — phosphorus for rooting.',                b:'ok',  bl:'Recommended'},
+      {name:'Zinc Sulphate',      desc:'25 kg/ha on deficient soils. Improves grain filling.',         b:'warn',bl:'Soil Test First'},
+    ],
+    sched:[
+      {act:'Urea Top Dressing', det:'Field A1 — Wheat',   date:'Mar 30', st:'due'},
+      {act:'Rust Fungicide Spray',det:'All Wheat Fields', date:'Apr 3',  st:'soon'},
+      {act:'Basal DAP',         det:'Field A2',           date:'Mar 20', st:'done'},
+    ]
+  },
+  rice:{
+    pest:[
+      {name:'Cartap HCl 4G',     desc:'Stem borer: 18 kg/ha at 25 & 45 days after transplanting.',   b:'warn',bl:'Moderate Risk'},
+      {name:'Tricyclazole 75% WP',desc:'Rice blast: 0.6 g/L at panicle initiation.',                 b:'ok',  bl:'Approved'},
+      {name:'Buprofezin 25% SC', desc:'Brown planthopper: 1 mL/L. Avoid near water bodies.',         b:'warn',bl:'Caution'},
+    ],
+    fert:[
+      {name:'Urea split (3 doses)',desc:'Basal + tillering + panicle. Total 120 kg/ha for HYVs.',    b:'ok',  bl:'Essential'},
+      {name:'Super Phosphate',    desc:'500 kg/ha basal before transplanting. Strengthens roots.',    b:'ok',  bl:'Recommended'},
+      {name:'MOP (Potash)',       desc:'60 kg/ha in two splits. Prevents lodging.',                   b:'ok',  bl:'Recommended'},
+    ],
+    sched:[
+      {act:'Blast Fungicide',    det:'All Rice Plots',    date:'Mar 28', st:'due'},
+      {act:'N Top Dressing',     det:'Paddy Field D1',    date:'Apr 1',  st:'soon'},
+      {act:'Transplanting Done', det:'Nursery Ready',     date:'Mar 15', st:'done'},
+    ]
+  },
+  cotton:{
+    pest:[
+      {name:'Spinosad 45% SC',   desc:'Bollworm: 0.5 mL/L. Low mammal toxicity, bio-friendly.',     b:'ok',  bl:'Bio-Friendly'},
+      {name:'Imidacloprid 17.8%',desc:'Sucking pests: seed treatment 7 mL/kg or foliar 0.5 mL/L.',  b:'warn',bl:'Bee Caution'},
+      {name:'Profenofos 50% EC', desc:'Whitefly & thrips. Max 2 sprays/season to prevent resistance.',b:'bad',bl:'Resistance Risk'},
+    ],
+    fert:[
+      {name:'NPK 19:19:19',      desc:'Balanced vegetative growth. 5 g/L foliar at 45 days.',        b:'ok',  bl:'Balanced'},
+      {name:'Urea + MOP Combo',  desc:'At boll dev: 60 kg/ha urea + 30 kg/ha MOP for fibre quality.',b:'ok',  bl:'Recommended'},
+      {name:'Boron 20 %',        desc:'0.1 % spray at boll formation prevents boll shedding.',       b:'warn',bl:'Precision Apply'},
+    ],
+    sched:[
+      {act:'Bollworm Spray',     det:'Cotton Field E1',   date:'Apr 5',  st:'soon'},
+      {act:'Potash Application', det:'Boll Development',  date:'Mar 26', st:'done'},
+      {act:'Boron Foliar',       det:'All Cotton',        date:'Apr 10', st:'soon'},
+    ]
+  },
+  soybean:{
+    pest:[
+      {name:'Tebuconazole 25.9%',desc:'Rust: 1 mL/L at first pustules. Apply immediately.',          b:'bad', bl:'URGENT'},
+      {name:'Thiamethoxam 25% WG',desc:'Whitefly & thrips: seed treat 3 g/kg or foliar 0.3 g/L.',   b:'warn',bl:'Moderate Risk'},
+      {name:'Chlorantraniliprole',desc:'Pod borer at fill stage: 0.3 mL/L — selective, safe.',       b:'ok',  bl:'Selective'},
+    ],
+    fert:[
+      {name:'Rhizobium Biofertilizer',desc:'Seed inoculation before sowing. Fixes 80–100 kg N/ha.',  b:'ok',  bl:'Organic'},
+      {name:'SSP',               desc:'400 kg/ha basal. Provides sulfur critical for nodulation.',    b:'ok',  bl:'Essential'},
+      {name:'Zn+B+Mo Micronutrient',desc:'Foliar 2 g/L at flowering. Check soil pH first.',          b:'warn',bl:'Check pH First'},
+    ],
+    sched:[
+      {act:'Rust Fungicide',     det:'URGENT — Field B3',  date:'Today', st:'due'},
+      {act:'Pod Borer Spray',    det:'Soybean B2',          date:'Apr 8', st:'soon'},
+      {act:'Rhizobium Inoculation',det:'New Seed Lot',    date:'Mar 10', st:'done'},
+    ]
+  },
+  tomato:{
+    pest:[
+      {name:'Metalaxyl + Mancozeb',desc:'Late blight prevention: 2.5 g/L every 7–10 days.',         b:'warn',bl:'Preventive Use'},
+      {name:'Abamectin 1.9% EC', desc:'Mites & leaf miners: 0.5 mL/L. PHI: 7 days.',               b:'warn',bl:'PHI Observe'},
+      {name:'Copper Oxychloride',desc:'Organic for bacterial wilt & leaf curl: 3 g/L weekly.',       b:'ok',  bl:'Safe Choice'},
+    ],
+    fert:[
+      {name:'NPK 6:24:24 + Ca',  desc:'At transplanting — promotes flowering, reduces BER.',         b:'ok',  bl:'Recommended'},
+      {name:'Calcium Nitrate',   desc:'Drip: 5 kg/1000 L at fruit set for firmness.',                b:'ok',  bl:'Fruit Quality'},
+      {name:'Potassium Humate',  desc:'2 kg/ha soil conditioner — improves water retention.',        b:'ok',  bl:'Organic'},
+    ],
+    sched:[
+      {act:'Late Blight Spray',  det:'All Tomato Plots',  date:'Mar 29', st:'due'},
+      {act:'Calcium Drip',       det:'Fruit Setting Stage',date:'Apr 2', st:'soon'},
+      {act:'Stake & Tie Vines',  det:'Tomato Row C2',     date:'Mar 22', st:'done'},
+    ]
+  }
+};
+
+function setCrop(btn,key){
+  document.querySelectorAll('.ctab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderPF(key);
+}
+
+function renderPF(key){
+  const d=CROPS[key];
+  const capKey=key[0].toUpperCase()+key.slice(1);
+  const stClass={due:'sp-due',done:'sp-done',soon:'sp-soon'};
+  const stLabel={due:'Due Now',done:'Done',soon:'Upcoming'};
+
+  document.getElementById('pfGrid').innerHTML=`
+    <div class="pf-panel">
+      <div class="pp-head">
+        <div class="pp-ico red">🐛</div>
+        <div class="pp-head-txt">
+          <h3>Pesticide Recommendations</h3>
+          <p>${capKey} — Kharif / Rabi 2025</p>
+        </div>
+      </div>
+      ${d.pest.map(p=>`
+        <div class="pf-item">
+          <div class="pf-iname">${p.name}<span class="badge ${p.b}">${p.bl}</span></div>
+          <div class="pf-idesc">${p.desc}</div>
+        </div>`).join('')}
+    </div>
+
+    <div class="pf-panel">
+      <div class="pp-head">
+        <div class="pp-ico grn">🌱</div>
+        <div class="pp-head-txt">
+          <h3>Fertilizer Plan</h3>
+          <p>${capKey} — Recommended Nutrients</p>
+        </div>
+      </div>
+      ${d.fert.map(f=>`
+        <div class="pf-item">
+          <div class="pf-iname">${f.name}<span class="badge ${f.b}">${f.bl}</span></div>
+          <div class="pf-idesc">${f.desc}</div>
+        </div>`).join('')}
+    </div>
+
+    <div class="pf-schedule">
+      <div class="pf-sched-h">📅 Treatment Calendar — ${capKey}</div>
+      <table class="sched-table">
+        <thead><tr>
+          <th>Activity</th><th>Field / Details</th><th>Date</th><th>Status</th>
+        </tr></thead>
+        <tbody>
+          ${d.sched.map(s=>`
+            <tr>
+              <td>${s.act}</td>
+              <td style="opacity:.75">${s.det}</td>
+              <td>${s.date}</td>
+              <td><span class="status-pill ${stClass[s.st]}">${stLabel[s.st]}</span></td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+renderPF('wheat');
+
+/* ══════════════════════════════════════
+   AI CHATBOT
+══════════════════════════════════════ */
+const SYS=`You are KrishiBot, a warm and expert AI agricultural advisor for Indian farmers.
+Your specialties:
+• Diagnosing crop diseases from image descriptions and symptom text
+• Predicting disease outbreak risk based on season, humidity, temperature
+• Recommending specific treatments with product names and dosages (Indian market)
+• Advising on organic & chemical options
+• Covering all major Indian crops: wheat, rice, cotton, soybean, sugarcane, tomato, onion, maize
+
+Response style:
+- Simple, warm language — a farmer must understand
+- Concise (4–6 sentences max)
+- End with ONE concrete action the farmer should take TODAY
+- Use line breaks for readability
+- Emoji only where genuinely helpful`;
+
+let history=[];
+let pendingImg=null;
+let pendingMime=null;
+
+async function callBot(msgs){
+  const r=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:1000,
+      system:SYS,
+      messages:msgs
+    })
+  });
+  const d=await r.json();
+  if(d.error)throw new Error(d.error.message);
+  return d.content.map(b=>b.text||'').join('\n');
+}
+
+function addMsg(role,html){
+  const wrap=document.getElementById('chatMsgs');
+  const div=document.createElement('div');
+  div.className='cm '+(role==='bot'?'bot':'usr');
+  div.innerHTML=role==='bot'
+    ?`<div class="cm-ava">🌿</div><div class="cm-bubble">${html}</div>`
+    :`<div class="cm-bubble">${html}</div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop=wrap.scrollHeight;
+  return div;
+}
+
+function showTyping(){
+  const wrap=document.getElementById('chatMsgs');
+  const div=document.createElement('div');
+  div.className='cm bot';div.id='typing';
+  div.innerHTML=`<div class="cm-ava">🌿</div><div class="cm-bubble"><div class="typing-ind"><i></i><i></i><i></i></div></div>`;
+  wrap.appendChild(div);wrap.scrollTop=wrap.scrollHeight;
+}
+
+async function sendMsg(){
+  const inp=document.getElementById('chatInp');
+  const txt=inp.value.trim();
+  if(!txt&&!pendingImg)return;
+
+  /* user message UI */
+  const label=(pendingImg?'📷 <em style="opacity:.7;font-size:.8rem">Image attached</em><br>':'')+escHTML(txt||'(image uploaded)');
+  addMsg('usr',label);
+
+  /* build API content */
+  const content=[];
+  if(pendingImg)content.push({type:'image',source:{type:'base64',media_type:pendingMime,data:pendingImg}});
+  if(txt)content.push({type:'text',text:txt});
+  history.push({role:'user',content:content.length===1&&!pendingImg?txt:content});
+
+  inp.value='';pendingImg=null;pendingMime=null;
+  document.getElementById('chatInp').placeholder='Describe your crop problem…';
+
+  showTyping();
+  try{
+    const reply=await callBot(history);
+    history.push({role:'assistant',content:reply});
+    document.getElementById('typing')?.remove();
+    addMsg('bot',reply.replace(/\n/g,'<br>'));
+  }catch(e){
+    document.getElementById('typing')?.remove();
+    addMsg('bot','⚠️ <span style="color:#c0562a">Could not connect. Please check your internet and try again.</span>');
+  }
+}
+
+function quickAsk(q){
+  document.getElementById('chatInp').value=q;
+  sendMsg();
+}
+
+function handleFile(inp){
+  if(!inp.files[0])return;
+  const f=inp.files[0];
+  const rd=new FileReader();
+  rd.onload=e=>{
+    pendingImg=e.target.result.split(',')[1];
+    pendingMime=f.type;
+    const wrap=document.getElementById('chatMsgs');
+    const prev=document.createElement('div');
+    prev.className='cm usr';
+    prev.innerHTML=`<div class="cm-bubble" style="padding:8px">
+      <img src="${e.target.result}" style="max-width:150px;border-radius:9px;display:block;margin-bottom:6px"/>
+      <em style="font-size:.76rem;opacity:.75">Image ready — add a description & send</em>
+    </div>`;
+    wrap.appendChild(prev);wrap.scrollTop=wrap.scrollHeight;
+    document.getElementById('chatInp').placeholder='Describe what you see…';
+    document.getElementById('chatInp').focus();
+  };
+  rd.readAsDataURL(f);
+}
+
+function escHTML(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ══════════════════════════════════════
+   MARKETPLACE JS
+══════════════════════════════════════ */
+let activeCat='all';
+
+function filterCat(btn,cat){
+  document.querySelectorAll('.mp-cat').forEach(c=>c.classList.remove('on'));
+  btn.classList.add('on');
+  activeCat=cat;
+  filterCrops();
+}
+
+function filterCrops(){
+  const q=(document.getElementById('mpSearch').value||'').toLowerCase();
+  document.querySelectorAll('.crop-card').forEach(card=>{
+    const cats=card.dataset.cat||'';
+    const name=card.querySelector('.cc-name').textContent.toLowerCase();
+    const meta=card.querySelector('.cc-meta').textContent.toLowerCase();
+    const catMatch=activeCat==='all'||cats.includes(activeCat);
+    const txtMatch=!q||name.includes(q)||meta.includes(q);
+    card.style.display=(catMatch&&txtMatch)?'':'none';
+  });
+}
+
+function sortCrops(){
+  const key=document.getElementById('mpSort').value;
+  const grid=document.getElementById('mpGrid');
+  const cards=[...grid.querySelectorAll('.crop-card')];
+  if(key==='default')return;
+  cards.sort((a,b)=>{
+    if(key==='price-asc')return parseFloat(a.dataset.price)-parseFloat(b.dataset.price);
+    if(key==='price-desc')return parseFloat(b.dataset.price)-parseFloat(a.dataset.price);
+    if(key==='fresh')return parseInt(a.dataset.fresh)-parseInt(b.dataset.fresh);
+    if(key==='popular')return parseInt(b.dataset.pop)-parseInt(a.dataset.pop);
+    return 0;
+  });
+  cards.forEach(c=>grid.appendChild(c));
+}
+
+/* ══════════════════════════════════════
+   MANDI TIMESTAMP
+══════════════════════════════════════ */
+function updateMandiTs(){
+  const d=new Date();
+  const h=d.getHours().toString().padStart(2,'0');
+  const m=d.getMinutes().toString().padStart(2,'0');
+  const el=document.getElementById('mandiTs');
+  if(el)el.textContent=h+':'+m;
+}
+updateMandiTs();
+setInterval(updateMandiTs,60000);
+
+/* ── Close mobile nav on link click ── */
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.querySelector('.nav-links').classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
